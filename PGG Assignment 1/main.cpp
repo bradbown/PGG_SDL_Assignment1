@@ -1,6 +1,8 @@
 #include <SDL.h>
 #include <SDL_image.h>
+
 #include <iostream>
+#include <sstream>
 
 #include "vec2D.h"
 #include "map.h"
@@ -28,7 +30,7 @@ int main(int argc, char *argv[])
 	// These are some variables to help show you what the parameters are for this function
 	// You can experiment with the numbers to see what they do
 
-	int winWidth = 480;
+	int winWidth = 720;
 	int winHeight = 640;
 
 	SDL_Window *window = SDL_CreateWindow("Fallout 2.5 - Return To The Wasteland!",  // The first parameter is the window title
@@ -57,31 +59,44 @@ int main(int argc, char *argv[])
 
 	bool go = true;
 	
-	map *Test;
-	Test = new map();
+	//INSTANCIATION
+
+	//Create new sprites
+
+	map *earth = new map();
+
+	//Load images for sprites
+
+	earth->LoadFromPNG("../Assets/earth.png", renderer);
+
+	//Set the starting position of sprites
+
+	earth->setMapPosition_x(0);
+	earth->setMapPosition_y(0);
+
+	//Setting Up FPS
+
+	unsigned int lastTime = SDL_GetTicks();
+	Uint32 startTime = SDL_GetTicks();
+	int numFrames = 0;
+
 	while (go)
 	{
+		numFrames++;
 
-		
-		system("cd");
-		Test->LoadFromPNG("Images/home-devices.png", renderer); // Load the image, woo!
-		
+		std::stringstream ss;
 
-		SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 0xFF); // Set default background colour to black.
-		SDL_RenderClear(renderer); // Clear the renderer to get rid of any artefacts.
-
-
-		// Anything you'd like to draw goes here.
-		Test->Draw(10, 10, renderer);
-		// Create draw function first.
-
-		SDL_RenderPresent(renderer); // Present the renderer to the screen.
-		
+		int fps = (numFrames / (float)(SDL_GetTicks() - startTime)) * 1000;
+		ss << fps;
 
 	}
-	delete Test; // Clean up. :)
-	SDL_DestroyWindow(window); // Destroy the window. :)
-	SDL_Quit(); // Terminate SDL.
+
+
+	//DELETING MEMORY LOCATIONS
+
+	delete earth;
+	SDL_DestroyWindow(window); // Destroy the window
+	SDL_Quit(); // Terminate SDL
 	
 	return 0;
 }

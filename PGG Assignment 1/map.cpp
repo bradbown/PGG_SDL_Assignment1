@@ -69,3 +69,33 @@ void map::Draw(int SPosition_x, int SPosition_y, SDL_Renderer *renderer)
 	// This is for doing sprite animation type effects
 	SDL_RenderCopy(renderer, _texture, NULL, &destRect);
 }
+
+void map::setMapPosition_x(int mapPosition_x)
+{
+	MapPosition_x += mapPosition_x;
+}
+
+int map::getMapPosition_x() const
+{
+	return MapPosition_x;
+}
+
+void map::setMapPosition_y(int mapPosition_y)
+{
+	MapPosition_x += mapPosition_y;
+}
+
+int map::getMapPosition_y() const
+{
+	return MapPosition_y;
+}
+
+void map::changePos_x(int mapPosition_x)
+{
+	MapPosition_x = mapPosition_x;
+}
+
+void map::changePos_y(int mapPosition_y)
+{
+	MapPosition_y = mapPosition_y;
+}

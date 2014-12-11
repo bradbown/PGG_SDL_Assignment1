@@ -4,6 +4,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <iostream>
 #include <string>
 
@@ -13,10 +14,10 @@ public:
 
 	map();
 
-	void setMapPoisition_x(int MapPosition_x);
+	void setMapPosition_x(int MapPosition_x);
 	int getMapPosition_x() const;
 
-	void setMapPoisition_y(int MapPosition_y);
+	void setMapPosition_y(int MapPosition_y);
 	int getMapPosition_y() const;
 
 	void changePos_x(int MapPosition_x);
@@ -37,6 +38,20 @@ protected:
 private:
 
 	int MapPosition_x, MapPosition_y;
+
+	struct
+	{
+		float spriteWidth;
+		float spriteHeight;
+
+		float textureWidth;
+		float textureHeight;
+
+		float frametime;
+
+		SDL_Rect srcrect;
+		SDL_Rect dstrect;
+	};
 
 };
 

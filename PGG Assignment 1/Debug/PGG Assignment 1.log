@@ -1,19 +1,16 @@
-﻿Build started 01/12/2014 15:57:54.
-     1>Project "E:\Year 2\Programming for Graphics and Games\PGG Assignment 1\PGG Assignment 1\PGG Assignment 1.vcxproj" on node 2 (Build target(s)).
+﻿Build started 11/12/2014 22:49:19.
+     1>Project "G:\Year 2\Programming for Graphics and Games\PGG_SDL_Assignment1\PGG Assignment 1\PGG Assignment 1.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"..\SDKs\SDL\SDL2_image-2.0.0\include" /I"..\SDKs\SDL\SDL2-devel-2.0.3-VC\SDL2-2.0.3\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
-     1>e:\year 2\programming for graphics and games\pgg assignment 1\pgg assignment 1\main.cpp(67): warning C4129: 'Y' : unrecognized character escape sequence
-     1>e:\year 2\programming for graphics and games\pgg assignment 1\pgg assignment 1\main.cpp(67): warning C4129: 'P' : unrecognized character escape sequence
-     1>e:\year 2\programming for graphics and games\pgg assignment 1\pgg assignment 1\main.cpp(67): warning C4129: 'I' : unrecognized character escape sequence
-     1>e:\year 2\programming for graphics and games\pgg assignment 1\pgg assignment 1\main.cpp(67): warning C4129: 'h' : unrecognized character escape sequence
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(90): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Year 2\Programming for Graphics and Games\PGG Assignment 1\Debug\PGG Assignment 1.exe" /INCREMENTAL /NOLOGO /LIBPATH:"..\SDKs\SDL\SDL2_image-2.0.0\lib\x86" /LIBPATH:"..\SDKs\SDL\SDL2-devel-2.0.3-VC\SDL2-2.0.3\lib\x86" SDL2.lib SDL2main.lib SDL2_image.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\Year 2\Programming for Graphics and Games\PGG Assignment 1\Debug\PGG Assignment 1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Year 2\Programming for Graphics and Games\PGG Assignment 1\Debug\PGG Assignment 1.lib" /MACHINE:X86 Debug\main.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"G:\Year 2\Programming for Graphics and Games\PGG_SDL_Assignment1\Debug\PGG Assignment 1.exe" /INCREMENTAL /NOLOGO /LIBPATH:"..\SDKs\SDL\SDL2_image-2.0.0\lib\x86" /LIBPATH:"..\SDKs\SDL\SDL2-devel-2.0.3-VC\SDL2-2.0.3\lib\x86" SDL2.lib SDL2main.lib SDL2_image.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"G:\Year 2\Programming for Graphics and Games\PGG_SDL_Assignment1\Debug\PGG Assignment 1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"G:\Year 2\Programming for Graphics and Games\PGG_SDL_Assignment1\Debug\PGG Assignment 1.lib" /MACHINE:X86 Debug\main.obj
          Debug\map.obj
          Debug\vec2D.obj
-         PGG Assignment 1.vcxproj -> E:\Year 2\Programming for Graphics and Games\PGG Assignment 1\Debug\PGG Assignment 1.exe
-     1>Done Building Project "E:\Year 2\Programming for Graphics and Games\PGG Assignment 1\PGG Assignment 1\PGG Assignment 1.vcxproj" (Build target(s)).
+         PGG Assignment 1.vcxproj -> G:\Year 2\Programming for Graphics and Games\PGG_SDL_Assignment1\Debug\PGG Assignment 1.exe
+     1>Done Building Project "G:\Year 2\Programming for Graphics and Games\PGG_SDL_Assignment1\PGG Assignment 1\PGG Assignment 1.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.15
+Time Elapsed 00:00:01.01
