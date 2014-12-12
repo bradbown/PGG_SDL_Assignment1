@@ -24,7 +24,7 @@ bool map::LoadFromPNG(std::string filename, SDL_Renderer *renderer)
 	//A check for whether the file name is empty
 	if (filename.empty())
 	{
-		std::cerr << "ERROR: map::LoadFromPNG - empty filename given" << std::endl;
+		std::cerr << "ERROR: map::LoadFromPNG - empty filename given \n" << std::endl;
 		return false;
 	}
 
@@ -50,24 +50,29 @@ bool map::LoadFromPNG(std::string filename, SDL_Renderer *renderer)
 	return true;
 }
 
-void map::Draw(int SPosition_x, int SPosition_y, SDL_Renderer *renderer)
+void map::Draw(int SPosition_x, int SPosition_y, int TileWidth, int TileHeight, SDL_Renderer *renderer)
 {
 	// This will specify where to draw the sprite
-	SDL_Rect destRect;
+	//SDL_Rect destRect;
 	// SDL has (0,0) at the top left corner - check this by playing about with the numbers!
-	destRect.x = SPosition_x;
-	destRect.y = SPosition_y;
+	//destRect.x = SPosition_x;
+	//destRect.y = SPosition_y;
 
+	ReadSprite.dstrect.x = SPosition_x;
+	ReadSprite.dstrect.y = SPosition_y;
+
+	ReadSprite.spriteWidth = 73;
+	ReadSprite.spriteHeight = 37;
 
 
 	// Query the texture to get its original width and height
-	SDL_QueryTexture(_texture, NULL, NULL, &destRect.w, &destRect.h);
+	SDL_QueryTexture(_texture, NULL, NULL, &ReadSprite.textureWidth, &ReadSprite.textureHeight);
 
 	// Here we are telling the renderer to copy the texture memory to our screen,
 	// at the position of the rectangle we specify
 	// The parameter that's currently NULL can be used to specify another rectangle that's a sub-region of the whole image
 	// This is for doing sprite animation type effects
-	SDL_RenderCopy(renderer, _texture, NULL, &destRect);
+	SDL_RenderCopy(renderer, _texture, NULL, &ReadSprite.dstrect);
 }
 
 void map::setMapPosition_x(int mapPosition_x)
@@ -98,4 +103,14 @@ void map::changePos_x(int mapPosition_x)
 void map::changePos_y(int mapPosition_y)
 {
 	MapPosition_y = mapPosition_y;
+}
+
+int map::getTextureWidth() const
+{
+	return ReadSprite.textureWidth;
+}
+
+int map::getTextureHeight() const
+{
+	return ReadSprite.textureHeight;
 }

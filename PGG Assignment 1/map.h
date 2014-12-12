@@ -4,7 +4,6 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
-#include <SDL_ttf.h>
 #include <iostream>
 #include <string>
 
@@ -23,12 +22,15 @@ public:
 	void changePos_x(int MapPosition_x);
 	void changePos_y(int MapPosition_y);
 
-	~map();
+	int getTextureWidth() const;
+	int getTextureHeight() const;
 
+	//Loads a .png file
 	bool LoadFromPNG(std::string filename, SDL_Renderer *renderer);
 
-	void Draw(int SPosition_x, int SPosition_y, SDL_Renderer *renderer);
+	void Draw(int SPosition_x, int SPosition_y, int TileWidth, int TileHeight, SDL_Renderer *renderer);
 
+	~map();
 protected:
 
 	// This variable will be our handle for the texture
@@ -41,18 +43,17 @@ private:
 
 	struct
 	{
-		float spriteWidth;
-		float spriteHeight;
-
-		float textureWidth;
-		float textureHeight;
-
-		float frametime;
+		int spriteWidth;
+		int spriteHeight;
+		
+		int textureWidth;
+		int textureHeight;
+		
+		int frametime;
 
 		SDL_Rect srcrect;
 		SDL_Rect dstrect;
-	};
-
+	}ReadSprite;
 };
 
 #endif

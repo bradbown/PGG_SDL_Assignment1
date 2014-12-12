@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 
 	//Load images for sprites
 
-	earth->LoadFromPNG("../Assets/earth.png", renderer);
+	earth->LoadFromPNG("G:Year 2/Programming for Graphics and Games/PGG_SDL_Assignment1/Assets/earth.png", renderer);
 
 	//Set the starting position of sprites
 
@@ -80,8 +80,39 @@ int main(int argc, char *argv[])
 	Uint32 startTime = SDL_GetTicks();
 	int numFrames = 0;
 
+
+	//Main Game Loop
 	while (go)
 	{
+		//Added keyboard input
+		SDL_Event incomingEvent;
+		while (SDL_PollEvent(&incomingEvent))
+		{
+			switch (incomingEvent.type)
+			{
+			case SDL_QUIT:
+				go = false;
+				break;
+
+			//When a key is lifted
+			case SDL_KEYUP:
+				switch (incomingEvent.key.keysym.sym)
+				{
+				}
+				break;
+			//When a key is pressed
+			case SDL_KEYDOWN:
+				switch (incomingEvent.key.keysym.sym)
+				{
+				case SDLK_ESCAPE:
+					go = false;
+					break;
+				}
+				break;
+			}
+		}
+		//std::cout << "in game loop";
+		//Setting up FPS
 		numFrames++;
 
 		std::stringstream ss;
@@ -89,6 +120,21 @@ int main(int argc, char *argv[])
 		int fps = (numFrames / (float)(SDL_GetTicks() - startTime)) * 1000;
 		ss << fps;
 
+		//Event Handling For Control Systems
+		unsigned int current = SDL_GetTicks();
+
+		float deltaTs = (float)(current - lastTime) / 1000.0f;
+		lastTime = current;
+
+
+
+		if (deltaTs < (1.0f / 50.0f))
+		{
+			SDL_Delay((unsigned int)(((1.0f / 50.0f) - deltaTs)*1000.0f));
+		}
+
+		
+		earth->Draw(earth->getMapPosition_x(), earth->getMapPosition_y(), earth->getTextureWidth(), earth->getTextureHeight(), renderer);
 	}
 
 
