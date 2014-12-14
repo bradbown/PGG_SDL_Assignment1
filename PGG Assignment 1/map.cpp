@@ -1,4 +1,6 @@
 #include "map.h"
+#include <iostream>
+#include <SDL_image.h>
 
 map::map()
 {
@@ -50,7 +52,8 @@ bool map::LoadFromPNG(std::string filename, SDL_Renderer *renderer)
 	return true;
 }
 
-void map::Draw(int SPosition_x, int SPosition_y, int TileWidth, int TileHeight, SDL_Renderer *renderer)
+//void map::Draw(int SPosition_x, int SPosition_y, int TileWidth, int TileHeight, SDL_Renderer *renderer)
+void map::Draw(int SPosition_x, int SPosition_y, SDL_Renderer *renderer)
 {
 	// This will specify where to draw the sprite
 	//SDL_Rect destRect;

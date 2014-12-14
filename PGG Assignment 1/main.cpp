@@ -134,7 +134,7 @@ int main(int argc, char *argv[])
 		}
 
 		
-		earth->Draw(earth->getMapPosition_x(), earth->getMapPosition_y(), earth->getTextureWidth(), earth->getTextureHeight(), renderer);
+		earth->Draw(earth->getMapPosition_x(), earth->getMapPosition_y(), /*earth->getTextureWidth(), earth->getTextureHeight(),*/ renderer);
 	}
 
 

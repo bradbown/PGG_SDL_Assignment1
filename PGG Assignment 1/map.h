@@ -28,8 +28,8 @@ public:
 	//Loads a .png file
 	bool LoadFromPNG(std::string filename, SDL_Renderer *renderer);
 
-	void Draw(int SPosition_x, int SPosition_y, int TileWidth, int TileHeight, SDL_Renderer *renderer);
-
+	//void Draw(int SPosition_x, int SPosition_y, int TileWidth, int TileHeight, SDL_Renderer *renderer);
+	void Draw(int SPosition_x, int SPosition_y, SDL_Renderer *renderer);
 	~map();
 protected:
 
