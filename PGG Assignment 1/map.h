@@ -4,7 +4,6 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
-#include <iostream>
 #include <string>
 
 class map
@@ -25,12 +24,14 @@ public:
 	int getTextureWidth() const;
 	int getTextureHeight() const;
 
+	~map();
+
 	//Loads a .png file
 	bool LoadFromPNG(std::string filename, SDL_Renderer *renderer);
 
 	//void Draw(int SPosition_x, int SPosition_y, int TileWidth, int TileHeight, SDL_Renderer *renderer);
 	void Draw(int SPosition_x, int SPosition_y, SDL_Renderer *renderer);
-	~map();
+	
 protected:
 
 	// This variable will be our handle for the texture
