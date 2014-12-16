@@ -11,26 +11,29 @@ class map
 public:
 
 	map();
+	~map();
 
-	void setMapPosition_x(int MapPosition_x);
-	int getMapPosition_x() const;
+	void setMapPosition_x(float MapPosition_x);
+	float getMapPosition_x() const;
 
-	void setMapPosition_y(int MapPosition_y);
-	int getMapPosition_y() const;
+	void setMapPosition_y(float MapPosition_y);
+	float getMapPosition_y() const;
 
-	void changePos_x(int MapPosition_x);
-	void changePos_y(int MapPosition_y);
+	void changePos_x(float MapPosition_x);
+	void changePos_y(float MapPosition_y);
 
 	int getTextureWidth() const;
 	int getTextureHeight() const;
 
-	~map();
+	void update(int in_speed);
+	void TileSelect(int in_speed);
 
 	//Loads a .png file
 	bool LoadFromPNG(std::string filename, SDL_Renderer *renderer);
 
 	//void Draw(int SPosition_x, int SPosition_y, int TileWidth, int TileHeight, SDL_Renderer *renderer);
 	void Draw(int SPosition_x, int SPosition_y, SDL_Renderer *renderer);
+	void AnimDraw(int positionX, int positionY, int vert, int hoz, SDL_Renderer *renderer);
 	
 protected:
 
@@ -40,7 +43,11 @@ protected:
 
 private:
 
-	int MapPosition_x, MapPosition_y;
+	char ID = 0;
+
+	const int FPS = 60;
+
+	float MapPosition_x, MapPosition_y;
 
 	struct
 	{

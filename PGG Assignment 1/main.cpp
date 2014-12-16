@@ -59,22 +59,28 @@ int main(int argc, char *argv[])
 	SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
 
 	vec2D vec2d;
-	
+
 	//INSTANCIATION
 
 	//Create new sprites
 
-	map *earth = new map();
+	map *earth[100];
+	for (int i = 0; i < 100; i++)
+	{
+		earth[i] = new map();
+	}
 
 	//Load images for sprites
-
-	earth->LoadFromPNG("G:/Year 2/Programming for Graphics and Games/PGG_SDL_Assignment1/Assets/earth.png", renderer);
-
+	for (int i = 0; i < 100; i++)
+	{
+		earth[i]->LoadFromPNG("G:/Year 2/Programming for Graphics and Games/PGG_SDL_Assignment1/Assets/earth.png", renderer);
+	}
 	//Set the starting position of sprites
-
-	earth->setMapPosition_x(0);
-	earth->setMapPosition_y(0);
-
+	for (int i = 0; i < 100; i++)
+	{
+		earth[i]->setMapPosition_x(73);
+		earth[i]->setMapPosition_y(18.5);
+	}
 	//Setting Up FPS
 
 	unsigned int lastTime = SDL_GetTicks();
@@ -89,6 +95,10 @@ int main(int argc, char *argv[])
 	//Main Game Loop
 	while (go)
 	{
+		int counter_x = 0;
+		int counter_y = 0;
+		bool adjust_x = false;
+		int adjustcounter = 1;
 		//Added keyboard input
 		SDL_Event incomingEvent;
 		while (SDL_PollEvent(&incomingEvent))
@@ -99,13 +109,13 @@ int main(int argc, char *argv[])
 				go = false;
 				break;
 
-			//When a key is lifted
+				//When a key is lifted
 			case SDL_KEYUP:
 				switch (incomingEvent.key.keysym.sym)
 				{
 				}
 				break;
-			//When a key is pressed
+				//When a key is pressed
 			case SDL_KEYDOWN:
 				switch (incomingEvent.key.keysym.sym)
 				{
@@ -146,9 +156,25 @@ int main(int argc, char *argv[])
 		SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 0xFF);
 		// Clear the entire screen to our selected colour
 		SDL_RenderClear(renderer);
-
-		earth->Draw(earth->getMapPosition_x(), earth->getMapPosition_y(),/* earth->getTextureWidth(), earth->getTextureHeight(),*/ renderer);
-
+		for (int i = 0; i < 100; i++)
+		{
+			if (counter_x == 10)
+			{
+				counter_x = 0;
+				counter_y++; 
+			}
+			
+			if (counter_y % 2)
+			{
+				earth[i]->AnimDraw((earth[i]->getMapPosition_x() * counter_x + 36.5), (earth[i]->getMapPosition_y() * counter_y), 7, 8, renderer);
+				counter_x++;
+			}
+			else
+			{
+				earth[i]->AnimDraw((earth[i]->getMapPosition_x() * counter_x), (earth[i]->getMapPosition_y() * counter_y), 7, 8, renderer);
+				counter_x++;
+			}
+		}
 		SDL_RenderPresent(renderer);
 
 		if (deltaTs < (1.0f / 50.0f))
@@ -156,14 +182,14 @@ int main(int argc, char *argv[])
 			SDL_Delay((unsigned int)(((1.0f / 50.0f) - deltaTs)*1000.0f));
 		}
 
-		
-		
 	}
 
-	
-	//DELETING MEMORY LOCATIONS
 
-	delete earth;
+	//DELETING MEMORY LOCATIONS
+	for (int i = 0; i < 100; i++)
+	{
+		delete earth[i];
+	}
 	SDL_DestroyWindow(window); // Destroy the window
 	SDL_Quit(); // Terminate SDL
 	
