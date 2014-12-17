@@ -64,19 +64,19 @@ int main(int argc, char *argv[])
 
 	//Create new sprites
 
-	map *earth[100];
-	for (int i = 0; i < 100; i++)
+	map *earth[1000];
+	for (int i = 0; i < 1000; i++)
 	{
 		earth[i] = new map();
 	}
 
 	//Load images for sprites
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 1000; i++)
 	{
 		earth[i]->LoadFromPNG("G:/Year 2/Programming for Graphics and Games/PGG_SDL_Assignment1/Assets/earth.png", renderer);
 	}
 	//Set the starting position of sprites
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 1000; i++)
 	{
 		earth[i]->setMapPosition_x(73);
 		earth[i]->setMapPosition_y(18.5);
@@ -122,6 +122,14 @@ int main(int argc, char *argv[])
 				case SDLK_ESCAPE:
 					go = false;
 					break;
+				case SDLK_RIGHT:
+					for (int i = 0; i < 1000; i++)
+					{
+
+						//earth[i]->setMapPosition_x((&earth[i]->getMapPosition_x - 1));
+						earth[i]->setMapPosition_x(-1);
+					}
+					break;
 				}
 				break;
 			}
@@ -156,7 +164,7 @@ int main(int argc, char *argv[])
 		SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 0xFF);
 		// Clear the entire screen to our selected colour
 		SDL_RenderClear(renderer);
-		for (int i = 0; i < 100; i++)
+		for (int i = 0; i < 1000; i++)
 		{
 			if (counter_x == 10)
 			{
@@ -186,7 +194,7 @@ int main(int argc, char *argv[])
 
 
 	//DELETING MEMORY LOCATIONS
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 1000; i++)
 	{
 		delete earth[i];
 	}

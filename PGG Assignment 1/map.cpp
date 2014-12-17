@@ -159,9 +159,9 @@ void map::update(int in_speed)
 	} // end of FPS
 }
 
-void map::setMapPosition_x(float mapPosition_x)
+void map::setMapPosition_x(float mapPositionX)
 {
-	MapPosition_x += mapPosition_x;
+	MapPosition_x += mapPositionX;
 }
 
 float map::getMapPosition_x() const
@@ -169,9 +169,9 @@ float map::getMapPosition_x() const
 	return MapPosition_x;
 }
 
-void map::setMapPosition_y(float mapPosition_y)
+void map::setMapPosition_y(float mapPositionY)
 {
-	MapPosition_y += mapPosition_y;
+	MapPosition_y += mapPositionY;
 }
 
 float map::getMapPosition_y() const
@@ -179,14 +179,19 @@ float map::getMapPosition_y() const
 	return MapPosition_y;
 }
 
-void map::changePos_x(float mapPosition_x)
+void map::changePos_x(float mapPositionX)
 {
-	MapPosition_x = mapPosition_x;
+	MapPosition_x = mapPositionX;
 }
 
-void map::changePos_y(float mapPosition_y)
+void map::changePos_y(float mapPositionY)
 {
-	MapPosition_y = mapPosition_y;
+	MapPosition_y = mapPositionY;
+}
+
+void map::scrollingMapPosX(int MapPositionX)
+{
+	MapPosition_x -= MapPositionX;
 }
 
 int map::getTextureWidth() const

@@ -13,14 +13,16 @@ public:
 	map();
 	~map();
 
-	void setMapPosition_x(float MapPosition_x);
+	void setMapPosition_x(float MapPositionX);
 	float getMapPosition_x() const;
 
-	void setMapPosition_y(float MapPosition_y);
+	void setMapPosition_y(float MapPositionY);
 	float getMapPosition_y() const;
 
-	void changePos_x(float MapPosition_x);
-	void changePos_y(float MapPosition_y);
+	void changePos_x(float MapPositionX);
+	void changePos_y(float MapPositionY);
+
+	void scrollingMapPosX(int MapPositionX);
 
 	int getTextureWidth() const;
 	int getTextureHeight() const;
