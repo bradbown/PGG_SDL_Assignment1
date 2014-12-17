@@ -65,6 +65,7 @@ int main(int argc, char *argv[])
 	//Create new sprites
 
 	map *earth[1000];
+	//int earthArr[1000];
 	for (int i = 0; i < 1000; i++)
 	{
 		earth[i] = new map();
@@ -90,7 +91,14 @@ int main(int argc, char *argv[])
 
 	std::cerr << "checkload:" << upcheckLoad;
 	std::cerr << "imageLoaded:" << upimageLoaded;
+
 	bool go = true;
+
+	bool cmd_forwards, cmd_backwards, cmd_left, cmd_right, cmd_space;
+	cmd_forwards = cmd_backwards = cmd_left = cmd_right = cmd_space = false;
+
+	int moveMap_x = 1;
+	int moveMap_y = 1;
 
 	//Main Game Loop
 	while (go)
@@ -113,6 +121,18 @@ int main(int argc, char *argv[])
 			case SDL_KEYUP:
 				switch (incomingEvent.key.keysym.sym)
 				{
+				case SDLK_LEFT:
+					cmd_left = false;
+					break;
+				case SDLK_RIGHT:
+					cmd_right = false;
+					break;
+				case SDLK_UP:
+					cmd_forwards = false;
+					break;
+				case SDLK_DOWN:
+					cmd_backwards = false;
+					break;
 				}
 				break;
 				//When a key is pressed
@@ -122,14 +142,29 @@ int main(int argc, char *argv[])
 				case SDLK_ESCAPE:
 					go = false;
 					break;
-				case SDLK_RIGHT:
-					for (int i = 0; i < 1000; i++)
-					{
-
-						//earth[i]->setMapPosition_x((&earth[i]->getMapPosition_x - 1));
-						earth[i]->setMapPosition_x(-1);
-					}
+				case SDLK_LEFT:
+					cmd_left = true;
 					break;
+				case SDLK_RIGHT:
+					cmd_right = true;
+					break;
+				case SDLK_UP:
+					cmd_forwards = true;
+					break;
+				case SDLK_DOWN:
+					cmd_backwards = true;
+					break;
+					/*for (int i = 0; i < 1000; i++)
+					{
+						
+						int j = 0;
+						//earthArr[i] = earth[i]->getMapPosition_x();
+						//earth[i]->setMapPosition_x((&earth[i]->getMapPosition_x - 1));
+						//earth[i]->setMapPosition_x(earthArr[i] - 1);
+						earth[i]->scrollingMapPosX(j);
+
+					}
+					break;*/
 				}
 				break;
 			}
@@ -164,25 +199,188 @@ int main(int argc, char *argv[])
 		SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 0xFF);
 		// Clear the entire screen to our selected colour
 		SDL_RenderClear(renderer);
-		for (int i = 0; i < 1000; i++)
+		
+		if (cmd_right && !cmd_backwards && !cmd_left && !cmd_forwards)
 		{
-			if (counter_x == 10)
+			for (int i = 0; i < 1000; i++)
 			{
-				counter_x = 0;
-				counter_y++; 
+				if (counter_x == 25)
+				{
+					counter_x = 0;
+					counter_y++;
+				}
+
+				if (counter_y % 2)
+				{
+					earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x + 36.5) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+					counter_x++;
+				}
+				else
+				{
+					earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+					counter_x++;
+				}
 			}
-			
-			if (counter_y % 2)
+			moveMap_x++;
+		}
+		else
+		{
+			for (int i = 0; i < 1000; i++)
 			{
-				earth[i]->AnimDraw((earth[i]->getMapPosition_x() * counter_x + 36.5), (earth[i]->getMapPosition_y() * counter_y), 7, 8, renderer);
-				counter_x++;
-			}
-			else
-			{
-				earth[i]->AnimDraw((earth[i]->getMapPosition_x() * counter_x), (earth[i]->getMapPosition_y() * counter_y), 7, 8, renderer);
-				counter_x++;
+				if (counter_x == 25)
+				{
+					counter_x = 0;
+					counter_y++;
+				}
+
+				if (counter_y % 2)
+				{
+					earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x + 36.5) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+					counter_x++;
+				}
+				else
+				{
+					earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+					counter_x++;
+				}
 			}
 		}
+		if (!cmd_right && !cmd_backwards && cmd_left && !cmd_forwards)
+		{
+			for (int i = 0; i < 1000; i++)
+			{
+				if (counter_x == 25)
+				{
+					counter_x = 0;
+					counter_y++;
+				}
+
+				if (counter_y % 2)
+				{
+					earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x + 36.5) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+					counter_x++;
+				}
+				else
+				{
+					earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y - moveMap_y)), 7, 8, renderer);
+					counter_x++;
+				}
+			}
+			moveMap_x--;
+		}
+		else
+		{
+			for (int i = 0; i < 1000; i++)
+			{
+				if (counter_x == 25)
+				{
+					counter_x = 0;
+					counter_y++;
+				}
+
+				if (counter_y % 2)
+				{
+					earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x + 36.5) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+					counter_x++;
+				}
+				else
+				{
+					earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+					counter_x++;
+				}
+			}
+		}
+		if (!cmd_right && !cmd_backwards && !cmd_left && cmd_forwards)
+		{
+			for (int i = 0; i < 1000; i++)
+			{
+				if (counter_x == 25)
+				{
+					counter_x = 0;
+					counter_y++;
+				}
+
+				if (counter_y % 2)
+				{
+					earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x + 36.5) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+					counter_x++;
+				}
+				else
+				{
+					earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+					counter_x++;
+				}
+			}
+			moveMap_y--;
+		}
+		else
+		{
+			for (int i = 0; i < 1000; i++)
+			{
+				if (counter_x == 25)
+				{
+					counter_x = 0;
+					counter_y++;
+				}
+
+				if (counter_y % 2)
+				{
+					earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x + 36.5) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+					counter_x++;
+				}
+				else
+				{
+					earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+					counter_x++;
+				}
+			}
+		}
+		if (!cmd_right && cmd_backwards && !cmd_left && !cmd_forwards)
+		{
+			for (int i = 0; i < 1000; i++)
+			{
+				if (counter_x == 25)
+				{
+					counter_x = 0;
+					counter_y++;
+				}
+
+				if (counter_y % 2)
+				{
+					earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x + 36.5) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+					counter_x++;
+				}
+				else
+				{
+					earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+					counter_x++;
+				}
+			}
+			moveMap_y++;
+		}
+		else
+		{
+			for (int i = 0; i < 1000; i++)
+			{
+				if (counter_x == 25)
+				{
+					counter_x = 0;
+					counter_y++;
+				}
+
+				if (counter_y % 2)
+				{
+					earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x + 36.5) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+					counter_x++;
+				}
+				else
+				{
+					earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+					counter_x++;
+				}
+			}
+		}
+	
 		SDL_RenderPresent(renderer);
 
 		if (deltaTs < (1.0f / 50.0f))
@@ -190,6 +388,7 @@ int main(int argc, char *argv[])
 			SDL_Delay((unsigned int)(((1.0f / 50.0f) - deltaTs)*1000.0f));
 		}
 
+		//cmd_right = true;
 	}
 
 

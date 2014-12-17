@@ -191,7 +191,8 @@ void map::changePos_y(float mapPositionY)
 
 void map::scrollingMapPosX(int MapPositionX)
 {
-	MapPosition_x -= MapPositionX;
+	//ReadSprite.dstrect.x -= 1;
+	MapPosition_x += MapPositionX;
 }
 
 int map::getTextureWidth() const
