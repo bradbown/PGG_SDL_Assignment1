@@ -35,6 +35,8 @@ int main(int argc, char *argv[])
 	int mapWidth = 73;
 	int mapHeight = 37;
 
+	Uint32 SDL_GetMouseState(int* x, int* y);
+
 	SDL_Window *window = SDL_CreateWindow("Fallout 2.5 - Return To The Wasteland!",  // The first parameter is the window title
 		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 		winWidth, winHeight,
@@ -99,6 +101,10 @@ int main(int argc, char *argv[])
 
 	int moveMap_x = 1;
 	int moveMap_y = 1;
+
+	int mouse_x = 0;
+	int mouse_y = 0;
+
 
 	//Main Game Loop
 	while (go)
@@ -200,29 +206,38 @@ int main(int argc, char *argv[])
 		// Clear the entire screen to our selected colour
 		SDL_RenderClear(renderer);
 		
-		if (cmd_right && !cmd_backwards && !cmd_left && !cmd_forwards)
+		//Mouse Control for movement of the map
+		//When the mouse is moved to the side of the screen, it moves the map in the direction.
+		SDL_PumpEvents();
+		if (SDL_MOUSEMOTION)
 		{
-			for (int i = 0; i < 1000; i++)
+			SDL_GetMouseState(&mouse_x, &mouse_y);
+			if (mouse_x <= 720 && mouse_x >= 670)
 			{
-				if (counter_x == 25)
+				for (int i = 0; i < 1000; i++)
 				{
-					counter_x = 0;
-					counter_y++;
-				}
+					if (counter_x == 25)
+					{
+						counter_x = 0;
+						counter_y++;
+					}
 
-				if (counter_y % 2)
-				{
-					earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x + 36.5) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
-					counter_x++;
+					if (counter_y % 2)
+					{
+						earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x + 36.5) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+						counter_x++;
+					}
+					else
+					{
+						earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+						counter_x++;
+					}
 				}
-				else
-				{
-					earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
-					counter_x++;
-				}
+				moveMap_x++;
+				moveMap_x++;
+				moveMap_x++;
 			}
-			moveMap_x++;
-		}
+		}	
 		else
 		{
 			for (int i = 0; i < 1000; i++)
@@ -245,7 +260,7 @@ int main(int argc, char *argv[])
 				}
 			}
 		}
-		if (!cmd_right && !cmd_backwards && cmd_left && !cmd_forwards)
+		if (mouse_x >= 0 && mouse_x <= 50)
 		{
 			for (int i = 0; i < 1000; i++)
 			{
@@ -266,6 +281,8 @@ int main(int argc, char *argv[])
 					counter_x++;
 				}
 			}
+			moveMap_x--;
+			moveMap_x--;
 			moveMap_x--;
 		}
 		else
@@ -290,7 +307,7 @@ int main(int argc, char *argv[])
 				}
 			}
 		}
-		if (!cmd_right && !cmd_backwards && !cmd_left && cmd_forwards)
+		if (mouse_y >= 0 && mouse_y <= 50)
 		{
 			for (int i = 0; i < 1000; i++)
 			{
@@ -311,6 +328,8 @@ int main(int argc, char *argv[])
 					counter_x++;
 				}
 			}
+			moveMap_y--;
+			moveMap_y--;
 			moveMap_y--;
 		}
 		else
@@ -335,7 +354,7 @@ int main(int argc, char *argv[])
 				}
 			}
 		}
-		if (!cmd_right && cmd_backwards && !cmd_left && !cmd_forwards)
+		if (mouse_y <= 640 && mouse_y >= 590)
 		{
 			for (int i = 0; i < 1000; i++)
 			{
@@ -356,6 +375,8 @@ int main(int argc, char *argv[])
 					counter_x++;
 				}
 			}
+			moveMap_y++;
+			moveMap_y++;
 			moveMap_y++;
 		}
 		else
