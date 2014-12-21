@@ -78,14 +78,8 @@ void map::AnimDraw(int positionX, int positionY, int vert, int hoz, SDL_Renderer
 	destRect.y = positionY;
 	*/
 
-
-
 	ReadSprite.dstrect.x = positionX;
 	ReadSprite.dstrect.y = positionY;
-
-
-
-
 
 	// std::cout << srcrect.x << "\n";
 
@@ -101,8 +95,6 @@ void map::AnimDraw(int positionX, int positionY, int vert, int hoz, SDL_Renderer
 
 	ReadSprite.dstrect.w = ReadSprite.spriteWidth;
 	ReadSprite.dstrect.h = ReadSprite.spriteHeight;
-
-
 
 
 	// Here we are telling the renderer to copy the texture memory to our screen,
