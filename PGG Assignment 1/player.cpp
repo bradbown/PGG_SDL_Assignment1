@@ -127,12 +127,8 @@ void player::update(int in_speed)
 
 		case 1:
 		{
-				  ReadSprite.srcrect.y = 0;
-				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
-				  if (ReadSprite.srcrect.x >= ReadSprite.textureWidth)
-				  {
-					  ReadSprite.srcrect.x = 0;
-				  }
+				  ReadSprite.srcrect.x = 0;
+				  ReadSprite.srcrect.y = 70;
 		}
 			break;
 
@@ -189,4 +185,14 @@ int player::getTextureWidth() const
 int player::getTextureHeight() const
 {
 	return ReadSprite.textureHeight;
+}
+
+void player::setID(int IDNum)
+{
+	ID = IDNum;
+}
+
+int player::getID() const
+{
+	return ID;
 }

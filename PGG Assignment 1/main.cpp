@@ -5,6 +5,7 @@
 
 #include "vec2D.h"
 #include "map.h"
+#include "player.h"
 
 bool upimageLoaded = false, downimageLoaded = false, rightimageLoaded = false, leftimageLoaded = false; // Very naughty, Bradley, you shouldn't be using evil globals.
 int upcheckLoad = 0, downcheckLoad = 0, rightcheckLoad = 0, leftcheckload = 0; // Very naughty, such globals, much evil.
@@ -67,28 +68,39 @@ int main(int argc, char *argv[])
 	//Create new sprites
 
 	map *earth[1000];
+	
 	//int earthArr[1000];
 	for (int i = 0; i < 1000; i++)
 	{
 		earth[i] = new map();
 	}
 
+	player *Player = new player();
+
 	//Load images for sprites
 	for (int i = 0; i < 1000; i++)
 	{
-		earth[i]->LoadFromPNG("G:/Year 2/Programming for Graphics and Games/PGG_SDL_Assignment1/Assets/earth.png", renderer);
+		earth[i]->LoadFromPNG("../Assets/earth.png", renderer);
 	}
+
+	Player->LoadFromPNG("../Assets/player_idle.png", renderer);
+
 	//Set the starting position of sprites
 	for (int i = 0; i < 1000; i++)
 	{
 		earth[i]->setMapPosition_x(73);
 		earth[i]->setMapPosition_y(18.5);
 	}
+
+	Player->setPlayerPosition_x(30);
+	Player->setPlayerPosition_y(30);
+	Player->setID(1);
+
 	//Setting Up FPS
 
 	unsigned int lastTime = SDL_GetTicks();
-	//Uint32 startTime = SDL_GetTicks();
-	//int numFrames = 0;
+	Uint32 startTime = SDL_GetTicks();
+	int numFrames = 0;
 
 
 	std::cerr << "checkload:" << upcheckLoad;
@@ -109,6 +121,23 @@ int main(int argc, char *argv[])
 	//Main Game Loop
 	while (go)
 	{
+		numFrames++;
+
+		std::stringstream ss;
+
+		int fps = (numFrames / (float)(SDL_GetTicks() - startTime)) * 1000;
+		ss << fps;
+
+		unsigned int current = SDL_GetTicks();
+
+		float deltaTs = (float)(current - lastTime) / 1000.0f;
+		lastTime = current;
+		
+		if (deltaTs < (1.0f / 50.0f))
+		{
+			SDL_Delay((unsigned int)(((1.0f / 50.0f) - deltaTs)*1000.0f));
+		}
+
 		int counter_x = 0;
 		int counter_y = 0;
 		bool adjust_x = false;
@@ -160,44 +189,11 @@ int main(int argc, char *argv[])
 				case SDLK_DOWN:
 					cmd_backwards = true;
 					break;
-					/*for (int i = 0; i < 1000; i++)
-					{
-						
-						int j = 0;
-						//earthArr[i] = earth[i]->getMapPosition_x();
-						//earth[i]->setMapPosition_x((&earth[i]->getMapPosition_x - 1));
-						//earth[i]->setMapPosition_x(earthArr[i] - 1);
-						earth[i]->scrollingMapPosX(j);
-
-					}
-					break;*/
 				}
 				break;
 			}
-		}
-		//std::cout << "in game loop";
-		//Setting up FPS
-
-		// We are going to work out the time between each frame now
-		// First, find the current time
-		// again, SDL_GetTicks() returns the time in milliseconds since SDL was initialised
-		// We can use this as the current time
-		unsigned int current = SDL_GetTicks();
-		// Next, we want to work out the change in time between the previous frame and the current one
-		// This is a 'delta' (used in physics to denote a change in something)
-		// So we call it our 'deltaT' and I like to use an 's' to remind me that it's in seconds!
-		// (To get it in seconds we need to divide by 1000 to convert from milliseconds)
-		float deltaTs = (float)(current - lastTime) / 1000.0f;
-		// Now that we've done this we can use the current time as the next frame's previous time
-		lastTime = current;
-
-		//numFrames++;
-
-		//std::stringstream ss;
-
-		//int fps = (numFrames / (float)(SDL_GetTicks() - startTime)) * 1000;
-		//ss << fps;
-
+		}		
+		
 		// Draw our world
 
 		// Start by clearing what was drawn before
@@ -402,14 +398,11 @@ int main(int argc, char *argv[])
 			}
 		}
 	
+		Player->AnimDraw(Player->getPlayerPosition_x(), Player->getPlayerPosition_y(), 6, 12, renderer);
+
+		Player->update(10);
+
 		SDL_RenderPresent(renderer);
-
-		if (deltaTs < (1.0f / 50.0f))
-		{
-			SDL_Delay((unsigned int)(((1.0f / 50.0f) - deltaTs)*1000.0f));
-		}
-
-		//cmd_right = true;
 	}
 
 
@@ -418,6 +411,8 @@ int main(int argc, char *argv[])
 	{
 		delete earth[i];
 	}
+	delete Player;
+
 	SDL_DestroyWindow(window); // Destroy the window
 	SDL_Quit(); // Terminate SDL
 	

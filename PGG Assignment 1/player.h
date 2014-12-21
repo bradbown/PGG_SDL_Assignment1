@@ -28,6 +28,9 @@ public:
 	void update(int in_speed);
 	void TileSelect(int in_speed);
 
+	void setID(int IDNum);
+	int getID() const;
+
 	//Loads a .png file
 	bool LoadFromPNG(std::string filename, SDL_Renderer *renderer);
 
@@ -42,7 +45,7 @@ protected:
 
 private:
 
-	char ID = 0;
+	int ID = 0;
 
 	const int FPS = 60;
 
