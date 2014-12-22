@@ -398,9 +398,9 @@ int main(int argc, char *argv[])
 			}
 		}
 	
-		Player->AnimDraw(Player->getPlayerPosition_x(), Player->getPlayerPosition_y(), 6, 12, renderer);
+		Player->AnimDraw(Player->getPlayerPosition_x(), Player->getPlayerPosition_y(), 36, 69, renderer);
 
-		Player->update(10);
+		Player->update_idle(2);
 
 		SDL_RenderPresent(renderer);
 	}

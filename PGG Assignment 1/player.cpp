@@ -64,12 +64,12 @@ void player::Draw(int SPosition_x, int SPosition_y, SDL_Renderer *renderer)
 	// Here we are telling the renderer to copy the texture memory to our screen,
 	// at the position of the rectangle we specify
 	// The parameter that's currently NULL can be used to specify another rectangle that's a sub-region of the whole image
-	// This is for doing sprite animation type effects
+	// This is for doing sprite ReadSprite type effects
 	SDL_RenderCopy(renderer, _texture, NULL, &destRect);
 
 }
 
-void player::AnimDraw(int positionX, int positionY, int vert, int hoz, SDL_Renderer *renderer)
+void player::AnimDraw(int positionX, int positionY, int hoz,int vert, SDL_Renderer *renderer)
 {
 	/* // This will specify where to draw the sprite
 	SDL_Rect destRect;
@@ -87,8 +87,8 @@ void player::AnimDraw(int positionX, int positionY, int vert, int hoz, SDL_Rende
 	SDL_QueryTexture(_texture, NULL, NULL, &ReadSprite.textureWidth, &ReadSprite.textureHeight);
 
 
-	ReadSprite.spriteWidth = ReadSprite.textureWidth / hoz;
-	ReadSprite.spriteHeight = ReadSprite.textureHeight / vert;
+	ReadSprite.spriteWidth = hoz;
+	ReadSprite.spriteHeight = vert;
 
 	ReadSprite.srcrect.w = ReadSprite.spriteWidth;
 	ReadSprite.srcrect.h = ReadSprite.spriteHeight;
@@ -100,12 +100,12 @@ void player::AnimDraw(int positionX, int positionY, int vert, int hoz, SDL_Rende
 	// Here we are telling the renderer to copy the texture memory to our screen,
 	// at the position of the rectangle we specify
 	// The parameter that's currently NULL can be used to specify another rectangle that's a sub-region of the whole image
-	// This is for doing sprite animation type effects
+	// This is for doing sprite ReadSprite type effects
 	SDL_RenderCopy(renderer, _texture, &ReadSprite.srcrect, &ReadSprite.dstrect);
 
 }
 
-void player::update(int in_speed)
+void player::update_idle(int in_speed)
 {
 
 
@@ -127,8 +127,13 @@ void player::update(int in_speed)
 
 		case 1:
 		{
-				  ReadSprite.srcrect.x = 0;
-				  ReadSprite.srcrect.y = 70;
+				  ReadSprite.srcrect.y = 0;
+				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+				//  if (ReadSprite.srcrect.x >= ReadSprite.textureWidth)
+				  if (ReadSprite.srcrect.x > (ReadSprite.spriteWidth * 12))
+				  {
+					  ReadSprite.srcrect.x = 0;
+				  }
 		}
 			break;
 

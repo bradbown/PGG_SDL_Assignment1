@@ -25,7 +25,7 @@ public:
 	int getTextureWidth() const;
 	int getTextureHeight() const;
 
-	void update(int in_speed);
+	void update_idle(int in_speed);
 	void TileSelect(int in_speed);
 
 	void setID(int IDNum);
@@ -36,7 +36,7 @@ public:
 
 	//void Draw(int SPosition_x, int SPosition_y, int TileWidth, int TileHeight, SDL_Renderer *renderer);
 	void Draw(int SPosition_x, int SPosition_y, SDL_Renderer *renderer);
-	void AnimDraw(int positionX, int positionY, int vert, int hoz, SDL_Renderer *renderer);
+	void AnimDraw(int positionX, int positionY, int hoz, int vert, SDL_Renderer *renderer);
 
 protected:
 
