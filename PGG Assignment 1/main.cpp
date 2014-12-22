@@ -194,6 +194,15 @@ int main(int argc, char *argv[])
 			}
 		}		
 		
+		if (cmd_forwards)
+		{
+			Player->setID(1);
+		}
+		if (cmd_right)
+		{
+			Player->setID(2);
+		}
+
 		// Draw our world
 
 		// Start by clearing what was drawn before

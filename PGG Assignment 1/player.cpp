@@ -130,7 +130,7 @@ void player::update_idle(int in_speed)
 				  ReadSprite.srcrect.y = 0;
 				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
 				//  if (ReadSprite.srcrect.x >= ReadSprite.textureWidth)
-				  if (ReadSprite.srcrect.x > (ReadSprite.spriteWidth * 12))
+				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 12))
 				  {
 					  ReadSprite.srcrect.x = 0;
 				  }
@@ -139,9 +139,9 @@ void player::update_idle(int in_speed)
 
 		case 2:
 		{
-				  ReadSprite.srcrect.y = 0;
+				  ReadSprite.srcrect.y = 70;
 				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
-				  if (ReadSprite.srcrect.x >= ReadSprite.textureWidth)
+				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 12))
 				  {
 					  ReadSprite.srcrect.x = 0;
 				  }
