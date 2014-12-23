@@ -127,19 +127,59 @@ void player::update_idle(int in_speed)
 
 		case 1:
 		{
-				  ReadSprite.srcrect.y = 0;
+			ReadSprite.srcrect.y = 0;
+			ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+			if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 12))
+			{
+				ReadSprite.srcrect.x = 0;
+			}
+		}
+			break;
+
+		case 2:
+		{
+			ReadSprite.srcrect.y = 70;
+			ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+			if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 12))
+			{
+				ReadSprite.srcrect.x = 0;
+			}
+		}
+			break;
+
+		case 3:
+		{
+			ReadSprite.srcrect.y = 140;
+			ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+			if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 12))
+			{
+				ReadSprite.srcrect.x = 0;
+			}
+		}
+			break;
+		case 4:
+		{
+			ReadSprite.srcrect.y = 210;
+			ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+			if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 12))
+			{
+				ReadSprite.srcrect.x = 0;
+			}
+		}
+			break;
+		case 5:
+		{
+				  ReadSprite.srcrect.y = 280;
 				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
-				//  if (ReadSprite.srcrect.x >= ReadSprite.textureWidth)
 				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 12))
 				  {
 					  ReadSprite.srcrect.x = 0;
 				  }
 		}
 			break;
-
-		case 2:
+		case 6:
 		{
-				  ReadSprite.srcrect.y = 70;
+				  ReadSprite.srcrect.y = 349;
 				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
 				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 12))
 				  {

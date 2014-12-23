@@ -107,6 +107,7 @@ int main(int argc, char *argv[])
 	std::cerr << "imageLoaded:" << upimageLoaded;
 
 	bool go = true;
+	bool first_run = false;
 
 	bool cmd_forwards, cmd_backwards, cmd_left, cmd_right, cmd_space;
 	cmd_forwards = cmd_backwards = cmd_left = cmd_right = cmd_space = false;
@@ -117,6 +118,38 @@ int main(int argc, char *argv[])
 	int mouse_x = 0;
 	int mouse_y = 0;
 
+	int counter_x = 0;
+	int counter_y = 0;
+
+	/*while (!first_run)
+	{
+		for (int i = 0; i < 1000; i++)
+		{
+			if (counter_x == 25)
+			{
+				counter_x = 0;
+				counter_y++;
+			}
+
+			if (counter_y % 2)
+			{
+				earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x + 36.5) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+				counter_x++;
+				earth[i]->setMapPosition_x(earth[i]->getMapPosition_x() * counter_x + 36.5);
+				earth[i]->setMapPosition_y(earth[i]->getMapPosition_y() * counter_x + 36.5);
+			}
+			else
+			{
+				earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+				counter_x++;
+				earth[i]->setMapPosition_x(earth[i]->getMapPosition_x() * counter_x + 36.5);
+				earth[i]->setMapPosition_y(earth[i]->getMapPosition_y() * counter_x + 36.5);
+			}
+		}
+		first_run = true;
+		go = true;
+
+	}*/
 
 	//Main Game Loop
 	while (go)
@@ -202,6 +235,14 @@ int main(int argc, char *argv[])
 		{
 			Player->setID(2);
 		}
+		if (cmd_backwards)
+		{
+			Player->setID(5);
+		}
+		if (cmd_left)
+		{
+			Player->setID(6);
+		}
 
 		// Draw our world
 
@@ -241,6 +282,7 @@ int main(int argc, char *argv[])
 				moveMap_x++;
 				moveMap_x++;
 				moveMap_x++;
+				Player->setPlayerPosition_x(-3);
 			}
 		}	
 		else
@@ -285,10 +327,12 @@ int main(int argc, char *argv[])
 					earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y - moveMap_y)), 7, 8, renderer);
 					counter_x++;
 				}
+				
 			}
 			moveMap_x--;
 			moveMap_x--;
 			moveMap_x--;
+			Player->setPlayerPosition_x(3);
 		}
 		else
 		{
@@ -336,6 +380,7 @@ int main(int argc, char *argv[])
 			moveMap_y--;
 			moveMap_y--;
 			moveMap_y--;
+			Player->setPlayerPosition_y(3);
 		}
 		else
 		{
@@ -383,6 +428,7 @@ int main(int argc, char *argv[])
 			moveMap_y++;
 			moveMap_y++;
 			moveMap_y++;
+			Player->setPlayerPosition_y(-3);
 		}
 		else
 		{
