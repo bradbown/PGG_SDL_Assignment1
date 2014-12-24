@@ -6,6 +6,7 @@
 #include "vec2D.h"
 #include "map.h"
 #include "player.h"
+#include "InputManager.h"
 
 bool upimageLoaded = false, downimageLoaded = false, rightimageLoaded = false, leftimageLoaded = false; // Very naughty, Bradley, you shouldn't be using evil globals.
 int upcheckLoad = 0, downcheckLoad = 0, rightcheckLoad = 0, leftcheckload = 0; // Very naughty, such globals, much evil.
@@ -65,36 +66,28 @@ int main(int argc, char *argv[])
 
 	//INSTANCIATION
 
-	//Create new sprites
-
-	map *earth[1000];
+	InputManager *Input = new InputManager();
 	
-	//int earthArr[1000];
+	map *earth[1000];
 	for (int i = 0; i < 1000; i++)
 	{
 		earth[i] = new map();
 	}
-
-	player *Player = new player();
-
-	//Load images for sprites
 	for (int i = 0; i < 1000; i++)
 	{
 		earth[i]->LoadFromPNG("../Assets/earth.png", renderer);
 	}
-
-	Player->LoadFromPNG("../Assets/player_idle.png", renderer);
-
-	//Set the starting position of sprites
 	for (int i = 0; i < 1000; i++)
 	{
 		earth[i]->setMapPosition_x(73);
 		earth[i]->setMapPosition_y(18.5);
 	}
 
+	player *Player = new player();
+	Player->LoadFromPNG("../Assets/player_idle.png", renderer);
 	Player->setPlayerPosition_x(30);
 	Player->setPlayerPosition_y(30);
-	Player->setID(1);
+	Player->setID(1);	
 
 	//Setting Up FPS
 
@@ -106,11 +99,7 @@ int main(int argc, char *argv[])
 	std::cerr << "checkload:" << upcheckLoad;
 	std::cerr << "imageLoaded:" << upimageLoaded;
 
-	bool go = true;
 	bool first_run = false;
-
-	bool cmd_forwards, cmd_backwards, cmd_left, cmd_right, cmd_space, cmd_mouseleft;
-	cmd_forwards = cmd_backwards = cmd_left = cmd_right = cmd_space = cmd_mouseleft = false;
 
 	int moveMap_x = 1;
 	int moveMap_y = 1;
@@ -152,7 +141,7 @@ int main(int argc, char *argv[])
 	}*/
 
 	//Main Game Loop
-	while (go)
+	while (Input->go)
 	{
 		numFrames++;
 
@@ -175,90 +164,21 @@ int main(int argc, char *argv[])
 		int counter_y = 0;
 		bool adjust_x = false;
 		int adjustcounter = 1;
-		//Added keyboard input
-		SDL_Event incomingEvent;
-		while (SDL_PollEvent(&incomingEvent))
-		{
-			switch (incomingEvent.type)
-			{
-			case SDL_QUIT:
-				go = false;
-				break;
-
-				//When a key is lifted
-			case SDL_KEYUP:
-				switch (incomingEvent.key.keysym.sym)
-				{
-				case SDLK_LEFT:
-					cmd_left = false;
-					break;
-				case SDLK_RIGHT:
-					cmd_right = false;
-					break;
-				case SDLK_UP:
-					cmd_forwards = false;
-					break;
-				case SDLK_DOWN:
-					cmd_backwards = false;
-					break;
-				}
-				break;
-				//When a key is pressed
-			case SDL_KEYDOWN:
-				switch (incomingEvent.key.keysym.sym)
-				{
-				case SDLK_ESCAPE:
-					go = false;
-					break;
-				case SDLK_LEFT:
-					cmd_left = true;
-					break;
-				case SDLK_RIGHT:
-					cmd_right = true;
-					break;
-				case SDLK_UP:
-					cmd_forwards = true;
-					break;
-				case SDLK_DOWN:
-					cmd_backwards = true;
-					break;
-				}
-				break;
-			}
-
-			if (incomingEvent.type == SDL_MOUSEBUTTONDOWN)
-			{
-				if (incomingEvent.button.button == SDL_BUTTON_LEFT)
-				{
-					std::cout << "Left Mouse Button has been pressed! \n";
-					cmd_mouseleft = true;
-				}
-
-				if (incomingEvent.type == SDL_MOUSEBUTTONUP)
-				{
-					std::cout << "Left Mouse Button was lifted! \n";
-					if (incomingEvent.button.button == SDL_BUTTON_LEFT)
-					{
-						cmd_mouseleft = false;
-					}
-				}
-			}
-			
-		}		
+		//Added keyboard input		
 		
-		if (cmd_forwards)
+		if (Input->cmd_forwards)
 		{
 			Player->setID(1);
 		}
-		if (cmd_right)
+		if (Input->cmd_right)
 		{
 			Player->setID(2);
 		}
-		if (cmd_backwards)
+		if (Input->cmd_backwards)
 		{
 			Player->setID(5);
 		}
-		if (cmd_left)
+		if (Input->cmd_left)
 		{
 			Player->setID(6);
 		}
@@ -472,7 +392,7 @@ int main(int argc, char *argv[])
 			}
 		}
 		int frametime = 0;
-		if (cmd_mouseleft)
+		if (Input->cmd_mouseleft)
 		{
 			bool done = false;
 			if (Player->getPlayerPosition_x() < mouse_x)
@@ -517,7 +437,7 @@ int main(int argc, char *argv[])
 						
 				}
 			}
-			cmd_mouseleft = false;
+			Input->cmd_mouseleft = false;
 		}
 
 		Player->AnimDraw(Player->getPlayerPosition_x(), Player->getPlayerPosition_y(), 36, 69, renderer);
