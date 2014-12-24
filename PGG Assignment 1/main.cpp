@@ -107,6 +107,8 @@ int main(int argc, char *argv[])
 	int mouse_x = 0;
 	int mouse_y = 0;
 
+	Input->go = true;
+
 	//int counter_x = 0;
 	//int counter_y = 0;
 
@@ -143,6 +145,8 @@ int main(int argc, char *argv[])
 	//Main Game Loop
 	while (Input->go)
 	{
+		Input->InputUpdate();
+
 		numFrames++;
 
 		std::stringstream ss;
@@ -163,8 +167,7 @@ int main(int argc, char *argv[])
 		int counter_x = 0;
 		int counter_y = 0;
 		bool adjust_x = false;
-		int adjustcounter = 1;
-		//Added keyboard input		
+		int adjustcounter = 1;	
 		
 		if (Input->cmd_forwards)
 		{
@@ -394,7 +397,6 @@ int main(int argc, char *argv[])
 		int frametime = 0;
 		if (Input->cmd_mouseleft)
 		{
-			bool done = false;
 			if (Player->getPlayerPosition_x() < mouse_x)
 			{
 				Player->setID(2);
@@ -435,6 +437,48 @@ int main(int argc, char *argv[])
 				
 					SDL_RenderPresent(renderer);
 						
+				}
+			}
+			if (Player->getPlayerPosition_x() > mouse_x)
+			{
+				Player->setID(5);
+				for (int i = Player->getPlayerPosition_x(); i > mouse_x; i--)
+				{
+					if (deltaTs < (1.0f / 50.0f))
+					{
+						SDL_Delay((unsigned int)(((1.0f / 50.0f) - deltaTs)*1000.0f));
+					}
+
+					SDL_RenderClear(renderer);
+
+					counter_x = 0;
+					counter_y = 0;
+
+					for (int i = 0; i < 1000; i++)
+					{
+						if (counter_x == 25)
+						{
+							counter_x = 0;
+							counter_y++;
+						}
+
+						if (counter_y % 2)
+						{
+							earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x + 36.5) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+							counter_x++;
+						}
+						else
+						{
+							earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+							counter_x++;
+						}
+					}
+
+					Player->setPlayerPosition_x(-1);
+					Player->AnimDraw(Player->getPlayerPosition_x(), Player->getPlayerPosition_y(), 36, 69, renderer);
+
+					SDL_RenderPresent(renderer);
+
 				}
 			}
 			Input->cmd_mouseleft = false;

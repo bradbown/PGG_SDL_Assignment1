@@ -15,10 +15,8 @@ public:
 
 	bool go;
 
-	bool cmd_forwards, cmd_backwards, cmd_left, cmd_right, cmd_space, cmd_mouseleft,
-		cmd_forwards = cmd_backwards = cmd_left = cmd_right = cmd_space,
-		cmd_mouseleft = false;
-
+	bool cmd_forwards, cmd_backwards, cmd_left, cmd_right, cmd_space, cmd_mouseleft;
+		
 protected:
 
 private:

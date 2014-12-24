@@ -13,6 +13,9 @@ InputManager::~InputManager()
 
 void InputManager::InputUpdate()
 {
+	cmd_forwards = cmd_backwards = cmd_left = cmd_right = cmd_space, cmd_mouseleft = false;
+
+
 	SDL_Event incomingEvent;
 	while (SDL_PollEvent(&incomingEvent))
 	{
