@@ -471,17 +471,50 @@ int main(int argc, char *argv[])
 				}
 			}
 		}
-	
+		int frametime = 0;
 		if (cmd_mouseleft)
 		{
-			std::cout << "Mouse Button 1 is pressed.\n";
+			bool done = false;
 			if (Player->getPlayerPosition_x() < mouse_x)
 			{
-				for (int i = 0; i < (mouse_x - Player->getPlayerPosition_x()); i++)
+				Player->setID(2);
+				for (int i = Player->getPlayerPosition_x(); i < mouse_x; i++)
 				{
+					if (deltaTs < (1.0f / 50.0f))
+					{
+						SDL_Delay((unsigned int)(((1.0f / 50.0f) - deltaTs)*1000.0f));
+					}
+
+					SDL_RenderClear(renderer);
+
+					counter_x = 0;
+					counter_y = 0;
+
+					for (int i = 0; i < 1000; i++)
+					{
+						if (counter_x == 25)
+						{
+							counter_x = 0;
+							counter_y++;
+						}
+
+						if (counter_y % 2)
+						{
+							earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x + 36.5) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+							counter_x++;
+						}
+						else
+						{
+							earth[i]->AnimDraw(((earth[i]->getMapPosition_x() * counter_x) - moveMap_x), ((earth[i]->getMapPosition_y() * counter_y) - moveMap_y), 7, 8, renderer);
+							counter_x++;
+						}
+					}
+
 					Player->setPlayerPosition_x(1);
 					Player->AnimDraw(Player->getPlayerPosition_x(), Player->getPlayerPosition_y(), 36, 69, renderer);
-					//SDL_RenderPresent(renderer);
+				
+					SDL_RenderPresent(renderer);
+						
 				}
 			}
 			cmd_mouseleft = false;
@@ -490,7 +523,7 @@ int main(int argc, char *argv[])
 		Player->AnimDraw(Player->getPlayerPosition_x(), Player->getPlayerPosition_y(), 36, 69, renderer);
 
 		Player->update_idle(2);
-
+	
 		SDL_RenderPresent(renderer);
 	}
 
