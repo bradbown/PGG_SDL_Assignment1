@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
 	int mouse_x = 0;
 	int mouse_y = 0;
 
-	Input->go = true;
+	bool go = true;
 
 	//int counter_x = 0;
 	//int counter_y = 0;
@@ -142,8 +142,12 @@ int main(int argc, char *argv[])
 
 	}*/
 
+	bool cmd_forwards, cmd_backwards, cmd_left, cmd_right, cmd_space, cmd_mouseleft;
+	cmd_forwards = cmd_backwards = cmd_left = cmd_right = cmd_space = cmd_mouseleft = false;
+
+
 	//Main Game Loop
-	while (Input->go)
+	while (go)
 	{
 		Input->InputUpdate();
 
@@ -169,19 +173,91 @@ int main(int argc, char *argv[])
 		bool adjust_x = false;
 		int adjustcounter = 1;	
 		
-		if (Input->cmd_forwards)
+		
+
+
+		SDL_Event incomingEvent;
+		while (SDL_PollEvent(&incomingEvent))
+		{
+			switch (incomingEvent.type)
+			{
+			case SDL_QUIT:
+				go = false;
+				break;
+
+				//When a key is lifted
+			case SDL_KEYUP:
+				switch (incomingEvent.key.keysym.sym)
+				{
+				case SDLK_LEFT:
+					cmd_left = false;
+					break;
+				case SDLK_RIGHT:
+					cmd_right = false;
+					break;
+				case SDLK_UP:
+					cmd_forwards = false;
+					break;
+				case SDLK_DOWN:
+					cmd_backwards = false;
+					break;
+				}
+				break;
+				//When a key is pressed
+			case SDL_KEYDOWN:
+				switch (incomingEvent.key.keysym.sym)
+				{
+				case SDLK_ESCAPE:
+					go = false;
+					break;
+				case SDLK_LEFT:
+					cmd_left = true;
+					break;
+				case SDLK_RIGHT:
+					cmd_right = true;
+					break;
+				case SDLK_UP:
+					cmd_forwards = true;
+					break;
+				case SDLK_DOWN:
+					cmd_backwards = true;
+					break;
+				}
+				break;
+			}
+
+			if (incomingEvent.type == SDL_MOUSEBUTTONDOWN)
+			{
+				if (incomingEvent.button.button == SDL_BUTTON_LEFT)
+				{
+					std::cout << "Left Mouse Button has been pressed! \n";
+					cmd_mouseleft = true;
+				}
+
+				if (incomingEvent.type == SDL_MOUSEBUTTONUP)
+				{
+					std::cout << "Left Mouse Button was lifted! \n";
+					if (incomingEvent.button.button == SDL_BUTTON_LEFT)
+					{
+						cmd_mouseleft = false;
+					}
+				}
+			}
+		}
+
+		if (cmd_forwards)
 		{
 			Player->setID(1);
 		}
-		if (Input->cmd_right)
+		if (cmd_right)
 		{
 			Player->setID(2);
 		}
-		if (Input->cmd_backwards)
+		if (cmd_backwards)
 		{
 			Player->setID(5);
 		}
-		if (Input->cmd_left)
+		if (cmd_left)
 		{
 			Player->setID(6);
 		}
@@ -395,12 +471,12 @@ int main(int argc, char *argv[])
 			}
 		}
 		int frametime = 0;
-		if (Input->cmd_mouseleft)
+		if (cmd_mouseleft)
 		{
 			if (Player->getPlayerPosition_x() < mouse_x)
 			{
 				Player->setID(2);
-				for (int i = Player->getPlayerPosition_x(); i < mouse_x; i++)
+				for (int i = Player->getPlayerPosition_x(); i < mouse_x; i+=5)
 				{
 					if (deltaTs < (1.0f / 50.0f))
 					{
@@ -432,7 +508,7 @@ int main(int argc, char *argv[])
 						}
 					}
 
-					Player->setPlayerPosition_x(1);
+					Player->setPlayerPosition_x(5);
 					Player->AnimDraw(Player->getPlayerPosition_x(), Player->getPlayerPosition_y(), 36, 69, renderer);
 				
 					SDL_RenderPresent(renderer);
@@ -442,7 +518,7 @@ int main(int argc, char *argv[])
 			if (Player->getPlayerPosition_x() > mouse_x)
 			{
 				Player->setID(5);
-				for (int i = Player->getPlayerPosition_x(); i > mouse_x; i--)
+				for (int i = Player->getPlayerPosition_x(); i > mouse_x; i-=5)
 				{
 					if (deltaTs < (1.0f / 50.0f))
 					{
@@ -474,14 +550,14 @@ int main(int argc, char *argv[])
 						}
 					}
 
-					Player->setPlayerPosition_x(-1);
+					Player->setPlayerPosition_x(-5);
 					Player->AnimDraw(Player->getPlayerPosition_x(), Player->getPlayerPosition_y(), 36, 69, renderer);
 
 					SDL_RenderPresent(renderer);
 
 				}
 			}
-			Input->cmd_mouseleft = false;
+			cmd_mouseleft = false;
 		}
 
 		Player->AnimDraw(Player->getPlayerPosition_x(), Player->getPlayerPosition_y(), 36, 69, renderer);

@@ -83,6 +83,5 @@ void InputManager::InputUpdate()
 				}
 			}
 		}
-
 	}
 }
