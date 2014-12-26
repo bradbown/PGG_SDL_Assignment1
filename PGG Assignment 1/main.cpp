@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
 	int mouse_x = 0;
 	int mouse_y = 0;
 
-	bool go = true;
+	Input->go = true;
 
 	//int counter_x = 0;
 	//int counter_y = 0;
@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
 
 
 	//Main Game Loop
-	while (go)
+	while (Input->go)
 	{
 		Input->InputUpdate();
 
@@ -172,12 +172,12 @@ int main(int argc, char *argv[])
 		int counter_y = 0;
 		bool adjust_x = false;
 		int adjustcounter = 1;	
-		
+		bool finished = true;
 		
 
 
 		SDL_Event incomingEvent;
-		while (SDL_PollEvent(&incomingEvent))
+		/*while (SDL_PollEvent(&incomingEvent))
 		{
 			switch (incomingEvent.type)
 			{
@@ -243,21 +243,21 @@ int main(int argc, char *argv[])
 					}
 				}
 			}
-		}
+		}*/
 
-		if (cmd_forwards)
+		if (Input->cmd_forwards)
 		{
 			Player->setID(1);
 		}
-		if (cmd_right)
+		if (Input->cmd_right)
 		{
 			Player->setID(2);
 		}
-		if (cmd_backwards)
+		if (Input->cmd_backwards)
 		{
 			Player->setID(5);
 		}
-		if (cmd_left)
+		if (Input->cmd_left)
 		{
 			Player->setID(6);
 		}
@@ -471,16 +471,17 @@ int main(int argc, char *argv[])
 			}
 		}
 		int frametime = 0;
-		if (cmd_mouseleft)
+		if (Input->cmd_mouseleft)
 		{
-			if (Player->getPlayerPosition_x() < mouse_x)
+			if (Player->getPlayerPosition_x() < mouse_x && finished)
 			{
 				Player->setID(2);
-				for (int i = Player->getPlayerPosition_x(); i < mouse_x; i+=5)
+				for (int i = Player->getPlayerPosition_x(); i < mouse_x; i++)
 				{
-					if (deltaTs < (1.0f / 50.0f))
+					finished = false;
+					if (deltaTs < (1.0f / 30.0f))
 					{
-						SDL_Delay((unsigned int)(((1.0f / 50.0f) - deltaTs)*1000.0f));
+						SDL_Delay((unsigned int)(((1.0f / 30.0f) - deltaTs)*1000.0f));
 					}
 
 					SDL_RenderClear(renderer);
@@ -508,21 +509,23 @@ int main(int argc, char *argv[])
 						}
 					}
 
-					Player->setPlayerPosition_x(5);
+					Player->setPlayerPosition_x(1);
+					Player->update_idle(2);
 					Player->AnimDraw(Player->getPlayerPosition_x(), Player->getPlayerPosition_y(), 36, 69, renderer);
 				
 					SDL_RenderPresent(renderer);
-						
 				}
+				//finished = true;
 			}
-			if (Player->getPlayerPosition_x() > mouse_x)
+			if (Player->getPlayerPosition_x() > mouse_x && finished)
 			{
 				Player->setID(5);
-				for (int i = Player->getPlayerPosition_x(); i > mouse_x; i-=5)
+				for (int i = Player->getPlayerPosition_x(); i > mouse_x; i--)
 				{
-					if (deltaTs < (1.0f / 50.0f))
+					finished = false;
+					if (deltaTs < (1.0f / 30.0f))
 					{
-						SDL_Delay((unsigned int)(((1.0f / 50.0f) - deltaTs)*1000.0f));
+						SDL_Delay((unsigned int)(((1.0f / 30.0f) - deltaTs)*1000.0f));
 					}
 
 					SDL_RenderClear(renderer);
@@ -550,12 +553,13 @@ int main(int argc, char *argv[])
 						}
 					}
 
-					Player->setPlayerPosition_x(-5);
+					Player->setPlayerPosition_x(-1);
+					Player->update_idle(2);
 					Player->AnimDraw(Player->getPlayerPosition_x(), Player->getPlayerPosition_y(), 36, 69, renderer);
 
 					SDL_RenderPresent(renderer);
-
 				}
+			//	finished = false;
 			}
 			cmd_mouseleft = false;
 		}
