@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
 	int mouse_x = 0;
 	int mouse_y = 0;
 
-	Input->go = true;
+	bool go = true;
 
 	//int counter_x = 0;
 	//int counter_y = 0;
@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
 
 
 	//Main Game Loop
-	while (Input->go)
+	while (go)
 	{
 		Input->InputUpdate();
 
@@ -177,7 +177,7 @@ int main(int argc, char *argv[])
 
 
 		SDL_Event incomingEvent;
-		/*while (SDL_PollEvent(&incomingEvent))
+		while (SDL_PollEvent(&incomingEvent))
 		{
 			switch (incomingEvent.type)
 			{
@@ -243,7 +243,7 @@ int main(int argc, char *argv[])
 					}
 				}
 			}
-		}*/
+		}
 
 		if (Input->cmd_forwards)
 		{
@@ -471,12 +471,12 @@ int main(int argc, char *argv[])
 			}
 		}
 		int frametime = 0;
-		if (Input->cmd_mouseleft)
+		if (cmd_mouseleft)
 		{
 			if (Player->getPlayerPosition_x() < mouse_x && finished)
 			{
 				Player->setID(2);
-				for (int i = Player->getPlayerPosition_x(); i < mouse_x; i++)
+				for (int i = Player->getPlayerPosition_x(); i < mouse_x; i+=5)
 				{
 					finished = false;
 					if (deltaTs < (1.0f / 30.0f))
@@ -509,7 +509,7 @@ int main(int argc, char *argv[])
 						}
 					}
 
-					Player->setPlayerPosition_x(1);
+					Player->setPlayerPosition_x(5);
 					Player->update_idle(2);
 					Player->AnimDraw(Player->getPlayerPosition_x(), Player->getPlayerPosition_y(), 36, 69, renderer);
 				
@@ -520,7 +520,7 @@ int main(int argc, char *argv[])
 			if (Player->getPlayerPosition_x() > mouse_x && finished)
 			{
 				Player->setID(5);
-				for (int i = Player->getPlayerPosition_x(); i > mouse_x; i--)
+				for (int i = Player->getPlayerPosition_x(); i > mouse_x; i-=5)
 				{
 					finished = false;
 					if (deltaTs < (1.0f / 30.0f))
@@ -553,7 +553,7 @@ int main(int argc, char *argv[])
 						}
 					}
 
-					Player->setPlayerPosition_x(-1);
+					Player->setPlayerPosition_x(-5);
 					Player->update_idle(2);
 					Player->AnimDraw(Player->getPlayerPosition_x(), Player->getPlayerPosition_y(), 36, 69, renderer);
 
