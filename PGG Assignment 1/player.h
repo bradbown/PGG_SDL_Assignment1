@@ -38,6 +38,17 @@ public:
 	void Draw(int SPosition_x, int SPosition_y, SDL_Renderer *renderer);
 	void AnimDraw(int positionX, int positionY, int hoz, int vert, SDL_Renderer *renderer);
 
+	void SetDestination(float x, float y);
+	float GetDestX();
+	float GetDestY();
+
+	void MoveToDest();
+
+	void setMoved(bool moved);
+	void setMoved_False(bool moved);
+	bool getMoved();
+	bool hasMoved();
+
 protected:
 
 	// This variable will be our handle for the texture
@@ -50,6 +61,11 @@ private:
 	const int FPS = 60;
 
 	float PlayerPosition_x, PlayerPosition_y;
+
+	float Goal_x, Goal_y;
+
+	bool moved = true;
+	int moving;
 
 	struct
 	{

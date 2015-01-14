@@ -153,7 +153,7 @@ void map::update(int in_speed)
 
 void map::setMapPosition_x(float mapPositionX)
 {
-	MapPosition_x += mapPositionX;
+	MapPosition_x = mapPositionX;
 }
 
 float map::getMapPosition_x() const
@@ -163,7 +163,7 @@ float map::getMapPosition_x() const
 
 void map::setMapPosition_y(float mapPositionY)
 {
-	MapPosition_y += mapPositionY;
+	MapPosition_y = mapPositionY;
 }
 
 float map::getMapPosition_y() const

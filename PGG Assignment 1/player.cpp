@@ -107,8 +107,6 @@ void player::AnimDraw(int positionX, int positionY, int hoz,int vert, SDL_Render
 
 void player::update_idle(int in_speed)
 {
-
-
 	ReadSprite.frametime++;
 
 	if (ID == 0)
@@ -190,6 +188,74 @@ void player::update_idle(int in_speed)
 
 		} // end of switch
 	} // end of FPS
+}
+
+float player::GetDestX()
+{
+	return Goal_x;
+}
+
+float player::GetDestY()
+{
+	return Goal_y;
+}
+
+void player::MoveToDest()
+{
+	moving = 0;
+	if (PlayerPosition_x < Goal_x)
+	{
+		// move right
+		setPlayerPosition_x(1);
+		// bool right = true
+		moving++;
+	}
+	else if (PlayerPosition_x > Goal_x)
+	{
+		// move left
+		setPlayerPosition_x(-1);
+		moving++;
+	}
+
+	if (PlayerPosition_y < Goal_y)
+	{
+		// move down
+		setPlayerPosition_y(1);
+		moving++;
+	}
+	else if (PlayerPosition_y > Goal_y)
+	{
+		// move up
+		setPlayerPosition_y(-1);
+		moving++;
+	}
+}
+
+bool player::hasMoved()
+{
+	//	if moved > 0, return true, else return false
+	return (moving > 0 ? true : false);
+}
+
+void player::setMoved(bool moved)
+{
+	moved;
+}
+
+void player::setMoved_False(bool moved)
+{
+	moved = false;
+}
+
+bool player::getMoved()
+{
+	return moved;
+}
+
+void player::SetDestination(float x, float y)
+{
+	Goal_x = x;
+	Goal_y = y;
 }
 
 void player::setPlayerPosition_x(float playerPositionX)
