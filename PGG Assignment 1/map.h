@@ -28,7 +28,9 @@ public:
 	int getTextureHeight() const;
 
 	void update(int in_speed);
-	void TileSelect(int in_speed);
+
+	void setID(int IDNum);
+	int getID() const;
 
 	//Loads a .png file
 	bool LoadFromPNG(std::string filename, SDL_Renderer *renderer);

@@ -190,6 +190,91 @@ void player::update_idle(int in_speed)
 	} // end of FPS
 }
 
+void player::update_walking(int in_speed)
+{
+	ReadSprite.frametime++;
+
+	if (ID == 0)
+	{
+		ReadSprite.frametime = 1;
+
+	}
+
+
+	if (FPS / ReadSprite.frametime == in_speed)
+	{
+		ReadSprite.frametime = 0;
+
+		switch (ID)
+		{
+
+		case 1:
+		{
+				  ReadSprite.srcrect.y = 0;
+				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 12))
+				  {
+					  ReadSprite.srcrect.x = 0;
+				  }
+		}
+			break;
+
+		case 2:
+		{
+				  ReadSprite.srcrect.y = 70;
+				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 12))
+				  {
+					  ReadSprite.srcrect.x = 0;
+				  }
+		}
+			break;
+
+		case 3:
+		{
+				  ReadSprite.srcrect.y = 140;
+				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 12))
+				  {
+					  ReadSprite.srcrect.x = 0;
+				  }
+		}
+			break;
+		case 4:
+		{
+				  ReadSprite.srcrect.y = 210;
+				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 12))
+				  {
+					  ReadSprite.srcrect.x = 0;
+				  }
+		}
+			break;
+		case 5:
+		{
+				  ReadSprite.srcrect.y = 280;
+				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 12))
+				  {
+					  ReadSprite.srcrect.x = 0;
+				  }
+		}
+			break;
+		case 6:
+		{
+				  ReadSprite.srcrect.y = 349;
+				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 12))
+				  {
+					  ReadSprite.srcrect.x = 0;
+				  }
+		}
+			break;
+
+		} // end of switch
+	} // end of FPS
+}
+
 float player::GetDestX()
 {
 	return Goal_x;

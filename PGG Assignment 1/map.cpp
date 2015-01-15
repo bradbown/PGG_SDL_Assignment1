@@ -109,25 +109,29 @@ void map::update(int in_speed)
 {
 
 
-	ReadSprite.frametime++;
+	
 
-	if (ID == 0)
-	{
-		ReadSprite.frametime = 1;
-
-	}
-
-
-	if (FPS / ReadSprite.frametime == in_speed)
-	{
-		ReadSprite.frametime = 0;
+	//if (FPS / ReadSprite.frametime == in_speed)
+	//{
+		//ReadSprite.frametime = 0;
 
 		switch (ID)
 		{
 
-		case 1:
+		case 0:
 		{
 			ReadSprite.srcrect.y = 0;
+			ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+			if (ReadSprite.srcrect.x >= ReadSprite.textureWidth)
+			{
+				ReadSprite.srcrect.x = 0;
+			}
+		}
+			break;
+
+		case 1:
+		{
+			ReadSprite.srcrect.y = 114;
 			ReadSprite.srcrect.x += ReadSprite.spriteWidth;
 			if (ReadSprite.srcrect.x >= ReadSprite.textureWidth)
 			{
@@ -138,17 +142,38 @@ void map::update(int in_speed)
 
 		case 2:
 		{
-			ReadSprite.srcrect.y = 0;
-			ReadSprite.srcrect.x += ReadSprite.spriteWidth;
-			if (ReadSprite.srcrect.x >= ReadSprite.textureWidth)
-			{
-				ReadSprite.srcrect.x = 0;
-			}
+				  ReadSprite.srcrect.y = 190;
+				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+				  if (ReadSprite.srcrect.x >= ReadSprite.textureWidth)
+				  {
+					  ReadSprite.srcrect.x = 0;
+				  }
+		}
+			break;
+			
+		case 3:
+		{
+				  ReadSprite.srcrect.y = 229;
+				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+				  if (ReadSprite.srcrect.x >= ReadSprite.textureWidth)
+				  {
+					  ReadSprite.srcrect.x = 0;
+				  }
 		}
 			break;
 
 		} // end of switch
-	} // end of FPS
+	//} // end of FPS
+}
+
+void map::setID(int IDNum)
+{
+	ID = IDNum;
+}
+
+int map::getID() const
+{
+	return ID;
 }
 
 void map::setMapPosition_x(float mapPositionX)

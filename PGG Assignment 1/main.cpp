@@ -121,15 +121,37 @@ int main(int argc, char *argv[])
 	int counter_y = 0;
 
 	bool go = false;
-
-	//int counter_x = 0;
-	//int counter_y = 0;
-
+	
 	while (!first_run)
 	{
 		bool first = true;
 		for (int i = 0; i < 1000; i++)
 		{
+			int ran = rand() % 10;
+			switch (ran)
+			{
+			case 0:
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+				earth[i]->setID(0);
+				break;
+			case 7:
+				earth[i]->setID(1);
+				break;
+			case 8:
+				earth[i]->setID(2);
+				break;
+			case 9:
+				earth[i]->setID(3);
+				break;
+			}
+
+			earth[i]->update(2);
+
 			if (counter_x == 25)
 			{
 				counter_x = 0;
@@ -296,19 +318,19 @@ int main(int argc, char *argv[])
 			}
 		}
 
-		if (Input->cmd_forwards)
+		if (cmd_forwards)
 		{
 			Player->setID(1);
 		}
-		if (Input->cmd_right)
+		if (cmd_right)
 		{
 			Player->setID(2);
 		}
-		if (Input->cmd_backwards)
+		if (cmd_backwards)
 		{
 			Player->setID(5);
 		}
-		if (Input->cmd_left)
+		if (cmd_left)
 		{
 			Player->setID(6);
 		}

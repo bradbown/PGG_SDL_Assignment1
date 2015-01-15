@@ -26,6 +26,8 @@ public:
 	int getTextureHeight() const;
 
 	void update_idle(int in_speed);
+	void update_walking(int in_speed);
+
 	void TileSelect(int in_speed);
 
 	void setID(int IDNum);
