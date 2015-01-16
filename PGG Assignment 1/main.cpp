@@ -93,9 +93,10 @@ int main(int argc, char *argv[])
 	}
 
 	player *Player = new player();
-	Player->LoadFromPNG("../Assets/player_idle.png", renderer);
-	Player->setPlayerPosition_x(30);
-	Player->setPlayerPosition_y(30);
+	Player->LoadFromPNG("../Assets/player_full.png", renderer);
+	Player->setPlayerPosition_x(100);
+	Player->setPlayerPosition_y(100);
+	Player->SetDestination(100, 100);
 	Player->setID(1);
 
 	//Setting Up FPS
@@ -121,7 +122,9 @@ int main(int argc, char *argv[])
 	int counter_y = 0;
 
 	bool go = false;
-	
+
+	bool walking = false;
+
 	while (!first_run)
 	{
 		bool first = true;
@@ -558,7 +561,8 @@ int main(int argc, char *argv[])
 		if (cmd_mouseleft)
 		{
 			Player->SetDestination(camera.x + mouse_x, camera.y + mouse_y);
-			
+			//Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 29, 67, renderer);
+			//Player->setID(7);
 			/*
 			if (Player->getPlayerPosition_x() < mouse_x && finished) //Player movement to the right on the x axis
 			{
@@ -651,15 +655,24 @@ int main(int argc, char *argv[])
 			cmd_mouseleft = false;
 			*/
 			cmd_mouseleft = false;
+			walking = true;
 		}
 
 		Player->MoveToDest();
+		
+		if (walking)
+		{
+			Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 29, 67, renderer);
+ 			Player->setID(7);
+			Player->update_idle(2);
+		}
+		else
+		{
+			Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 36, 69, renderer);
+		}
 		std::cout << Player->getPlayerPosition_x() << ", " << Player->getPlayerPosition_y() << std::endl;
-
-		Player->AnimDraw(Player->getPlayerPosition_x() - camera.x , Player->getPlayerPosition_y() - camera.y, 36, 69, renderer);
-
 		Player->update_idle(2);
-
+		//Player->update_walking(2);
 		SDL_RenderPresent(renderer);
 	}
 

@@ -25,7 +25,7 @@ bool player::LoadFromPNG(std::string filename, SDL_Renderer *renderer)
 	// Just check we're not being given garbage :P
 	if (filename.empty())
 	{
-		std::cerr << "ERROR: Sprite::LoadFromBMP - empty filename given" << std::endl;
+		std::cerr << "ERROR: Sprite::LoadFromBMP - Empty filename given." << std::endl;
 		return false;
 	}
 
@@ -35,7 +35,7 @@ bool player::LoadFromPNG(std::string filename, SDL_Renderer *renderer)
 	if (!image)
 	{
 		// We'll do a quick check here because it's easy to get filenames or directories wrong
-		std::cerr << "ERROR: Sprite::LoadFromBMP - Oh dear, sorry but I can't find your image file. This brings me great sadness :(" << std::endl;
+		std::cerr << "ERROR: Sprite::LoadFromPNG - Can't find the image file." << std::endl;
 		return false;
 	}
 
@@ -185,6 +185,22 @@ void player::update_idle(int in_speed)
 				  }
 		}
 			break;
+		case 7:
+		{
+				  if (first)
+				  {
+					  ReadSprite.srcrect.x = 441;
+					  first = false;
+				  }
+				  ReadSprite.srcrect.y = 0;
+				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+				  if (ReadSprite.srcrect.x >= (441 + (ReadSprite.spriteWidth * 8)))
+				  {
+					  ReadSprite.srcrect.x = 441;
+					  first = true;
+				  }
+		}
+			break;
 
 		} // end of switch
 	} // end of FPS
@@ -212,7 +228,7 @@ void player::update_walking(int in_speed)
 		{
 				  ReadSprite.srcrect.y = 0;
 				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
-				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 12))
+				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 8))
 				  {
 					  ReadSprite.srcrect.x = 0;
 				  }
@@ -223,7 +239,7 @@ void player::update_walking(int in_speed)
 		{
 				  ReadSprite.srcrect.y = 70;
 				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
-				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 12))
+				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 8))
 				  {
 					  ReadSprite.srcrect.x = 0;
 				  }
@@ -234,7 +250,7 @@ void player::update_walking(int in_speed)
 		{
 				  ReadSprite.srcrect.y = 140;
 				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
-				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 12))
+				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 8))
 				  {
 					  ReadSprite.srcrect.x = 0;
 				  }
@@ -244,7 +260,7 @@ void player::update_walking(int in_speed)
 		{
 				  ReadSprite.srcrect.y = 210;
 				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
-				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 12))
+				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 8))
 				  {
 					  ReadSprite.srcrect.x = 0;
 				  }
@@ -254,7 +270,7 @@ void player::update_walking(int in_speed)
 		{
 				  ReadSprite.srcrect.y = 280;
 				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
-				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 12))
+				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 8))
 				  {
 					  ReadSprite.srcrect.x = 0;
 				  }
@@ -264,7 +280,7 @@ void player::update_walking(int in_speed)
 		{
 				  ReadSprite.srcrect.y = 349;
 				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
-				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 12))
+				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 8))
 				  {
 					  ReadSprite.srcrect.x = 0;
 				  }

@@ -51,10 +51,13 @@ public:
 	bool getMoved();
 	bool hasMoved();
 
+	bool first = true;
+
 protected:
 
 	// This variable will be our handle for the texture
 	SDL_Texture *_texture;
+	
 
 private:
 
@@ -82,6 +85,9 @@ private:
 		SDL_Rect srcrect;
 		SDL_Rect dstrect;
 	}ReadSprite;
+
+	SDL_Texture *idle;
+	SDL_Texture *walk;
 };
 
 #endif
