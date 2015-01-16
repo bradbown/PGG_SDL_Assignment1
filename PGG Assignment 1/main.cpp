@@ -119,6 +119,11 @@ int main(int argc, char *argv[])
 
 	bool walking = false;
 	bool walking_NE = false;
+	bool walking_NW = false;
+	bool walking_E = false;
+	bool walking_W = false;
+	bool walking_SE = false;
+	bool walking_SW = false;
 
 	while (!first_run)
 	{
@@ -562,7 +567,47 @@ int main(int argc, char *argv[])
 		}
 
 		Player->MoveToDest();
-		
+
+		//Transitioning~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+		if (walking_NE && Player->getPlayerPosition_x() == Player->GetDestX() || walking_NE && Player->getPlayerPosition_y() == Player->GetDestY())	//transition from North East
+		{
+			transition = true;
+			walking_NE = false;
+		}
+
+		if (walking_E && Player->getPlayerPosition_x() == Player->GetDestX())	//transition from East
+		{
+			transition = true;
+			walking_E = false;
+		}
+
+		if (walking_SE && Player->getPlayerPosition_x() == Player->GetDestX() || walking_SE && Player->getPlayerPosition_y() == Player->GetDestY())	//transition from South East
+		{
+			transition = true;
+			walking_SE = false;
+		}
+	
+		if (walking_SW && Player->getPlayerPosition_x() == Player->GetDestX() || walking_SW && Player->getPlayerPosition_y() == Player->GetDestY())	//transition from South West
+		{
+			transition = true;
+			walking_SW = false;
+		}
+
+		if (walking_W && Player->getPlayerPosition_x() == Player->GetDestX())	//transition from West
+		{
+			transition = true;
+			walking_W = false;
+		}
+
+		if (walking_NW && Player->getPlayerPosition_x() == Player->GetDestX() || walking_NW && Player->getPlayerPosition_y() == Player->GetDestY())	//transition from North West
+		{
+			transition = true;
+			walking_NW = false;
+		}
+
+		//Walking Animation Selection~~~~~~~~~~~~~~~~~~~~
+
 		if (walking && Player->getPlayerPosition_x() < Player->GetDestX() && Player->getPlayerPosition_y() > Player->GetDestY()) //if walking north east
 		{
 			if (transition)
@@ -577,12 +622,6 @@ int main(int argc, char *argv[])
 			walking_NE = true;
 		}
 
-		if (walking_NE && Player->getPlayerPosition_x() == Player->GetDestX() || walking_NE && Player->getPlayerPosition_y() == Player->GetDestY())
-		{
-			transition = true;
-			walking_NE = false;
-		}
-
 		if (walking && Player->getPlayerPosition_x() < Player->GetDestX() && Player->getPlayerPosition_y() == Player->GetDestY()) //if walking east
 		{
 			if (transition)
@@ -595,13 +634,104 @@ int main(int argc, char *argv[])
 			Player->setID(8);
 			Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 43, 63, renderer);
 			Player->update_idle(2);
+			walking_E = true;
+		}
+
+		if (walking && Player->getPlayerPosition_x() < Player->GetDestX() && Player->getPlayerPosition_y() < Player->GetDestY()) //if walking south east
+		{
+			if (transition)
+			{
+				Player->first = true;
+				Player->setFrametime(20);
+				transition = false;
+			}
+
+			Player->setID(9);
+			Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 30, 66, renderer);
+			Player->update_idle(2);
+			walking_SE = true;
+		}
+
+		if (walking && Player->getPlayerPosition_x() > Player->GetDestX() && Player->getPlayerPosition_y() < Player->GetDestY()) //if walking south west
+		{
+			if (transition)
+			{
+				Player->first = true;
+				Player->setFrametime(20);
+				transition = false;
+			}
+
+			Player->setID(10);
+			Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 30, 66, renderer);
+			Player->update_idle(2);
+			walking_SW = true;
+		}
+
+		if (walking && Player->getPlayerPosition_x() > Player->GetDestX() && Player->getPlayerPosition_y() == Player->GetDestY()) //if walking west
+		{
+			if (transition)
+			{
+				Player->first = true;
+				Player->setFrametime(20);
+				transition = false;
+			}
+
+			Player->setID(11);
+			Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 43, 63, renderer);
+			Player->update_idle(2);
+			walking_W = true;
+		}
+
+		if (walking && Player->getPlayerPosition_x() > Player->GetDestX() && Player->getPlayerPosition_y() > Player->GetDestY()) //if walking north west
+		{
+			if (transition)
+			{
+				Player->first = true;
+				Player->setFrametime(20);
+				transition = false;
+			}
+
+			Player->setID(12);
+			Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 30, 67, renderer);
+			Player->update_idle(2);
+			walking_NW = true;
 		}
 
 		if (Player->getPlayerPosition_x() == Player->GetDestX() && Player->getPlayerPosition_y() == Player->GetDestY())//else idling
 		{
 			walking = false;
+			
+			if (Player->getID() == 7)
+			{
+				Player->setID(1);
+			}
+
+			if (Player->getID() == 8)
+			{
+				Player->setID(2);
+			}
+
+			if (Player->getID() == 9)
+			{
+				Player->setID(3);
+			}
+
+			if (Player->getID() == 10)
+			{
+				Player->setID(4);
+			}
+
+			if (Player->getID() == 11)
+			{
+				Player->setID(5);
+			}
+
+			if (Player->getID() == 12)
+			{
+				Player->setID(6);
+			}
 			Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 36, 69, renderer);
-			Player->setID(3);	
+			Player->update_idle(2);
 		}
 		std::cout << Player->getPlayerPosition_x() << ", " << Player->getPlayerPosition_y() << std::endl;
 		Player->update_idle(2);

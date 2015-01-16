@@ -122,7 +122,9 @@ void player::update_idle(int in_speed)
 		switch (ID)
 		{
 
-		case 1:
+		//IDLE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+		case 1:		//Idle North East
 		{
 			ReadSprite.srcrect.y = 0;
 			ReadSprite.srcrect.x += ReadSprite.spriteWidth;
@@ -133,7 +135,7 @@ void player::update_idle(int in_speed)
 		}
 			break;
 
-		case 2:
+		case 2:		//Idle East
 		{
 			ReadSprite.srcrect.y = 70;
 			ReadSprite.srcrect.x += ReadSprite.spriteWidth;
@@ -144,7 +146,7 @@ void player::update_idle(int in_speed)
 		}
 			break;
 
-		case 3:
+		case 3:		//Idle South East
 		{
 			ReadSprite.srcrect.y = 140;
 			ReadSprite.srcrect.x += ReadSprite.spriteWidth;
@@ -154,7 +156,8 @@ void player::update_idle(int in_speed)
 			}
 		}
 			break;
-		case 4:
+
+		case 4:		//Idle South West
 		{
 			ReadSprite.srcrect.y = 210;
 			ReadSprite.srcrect.x += ReadSprite.spriteWidth;
@@ -164,7 +167,8 @@ void player::update_idle(int in_speed)
 			}
 		}
 			break;
-		case 5:
+
+		case 5:		//Idle West
 		{
 				  ReadSprite.srcrect.y = 280;
 				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
@@ -174,9 +178,10 @@ void player::update_idle(int in_speed)
 				  }
 		}
 			break;
-		case 6:
+
+		case 6:		//Idle North West
 		{
-				  ReadSprite.srcrect.y = 349;
+				  ReadSprite.srcrect.y = 350;
 				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
 				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 12))
 				  {
@@ -184,7 +189,10 @@ void player::update_idle(int in_speed)
 				  }
 		}
 			break;
-		case 7:
+
+		//WALKING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+		case 7:	//Walking North Eest
 		{
 				  if (first)
 				  {
@@ -196,11 +204,10 @@ void player::update_idle(int in_speed)
 				  if (ReadSprite.srcrect.x >= (441 + (ReadSprite.spriteWidth * 8)))
 				  {
 					  ReadSprite.srcrect.x = 441;
-					  first = true;
 				  }
 		}
 			break;
-		case 8:
+		case 8:	//Walking East
 		{
 				  if (first)
 				  {
@@ -212,93 +219,71 @@ void player::update_idle(int in_speed)
 				  if (ReadSprite.srcrect.x >= (441 + (ReadSprite.spriteWidth * 8)))
 				  {
 					  ReadSprite.srcrect.x = 441;
-					  first = true;
 				  }
 		}
 			break;
-
-		} // end of switch
-	} // end of FPS
-}
-
-void player::update_walking(int in_speed)
-{
-	ReadSprite.frametime++;
-
-	if (ID == 0)
-	{
-		ReadSprite.frametime = 1;
-
-	}
-
-
-	if (FPS / ReadSprite.frametime == in_speed)
-	{
-		ReadSprite.frametime = 0;
-
-		switch (ID)
+		case 9:	//Walking South East
 		{
-
-		case 1:
-		{
-				  ReadSprite.srcrect.y = 0;
-				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
-				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 8))
+				  if (first)
 				  {
-					  ReadSprite.srcrect.x = 0;
+					  ReadSprite.srcrect.x = 441;
+					  first = false;
+				  }
+				  ReadSprite.srcrect.y = 138;
+				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+				  if (ReadSprite.srcrect.x >= (441 + (ReadSprite.spriteWidth * 8)))
+				  {
+					  ReadSprite.srcrect.x = 441;
 				  }
 		}
 			break;
-
-		case 2:
+		case 10:	//Walking South East
 		{
-				  ReadSprite.srcrect.y = 70;
-				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
-				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 8))
-				  {
-					  ReadSprite.srcrect.x = 0;
-				  }
+					if (first)
+					{
+						ReadSprite.srcrect.x = 441;
+						first = false;
+					}
+					ReadSprite.srcrect.y = 206;
+					ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+					if (ReadSprite.srcrect.x >= (441 + (ReadSprite.spriteWidth * 8)))
+					{
+						ReadSprite.srcrect.x = 441;
+					}
+		}
+			break;
+	
+		case 11:	//Walking West
+		{
+					if (first)
+					{
+						ReadSprite.srcrect.x = 441;
+						first = false;
+					}
+					ReadSprite.srcrect.y = 277;
+					ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+					if (ReadSprite.srcrect.x >= (441 + (ReadSprite.spriteWidth * 8)))
+					{
+						ReadSprite.srcrect.x = 441;
+						first = true;
+					}
 		}
 			break;
 
-		case 3:
+		case 12:	//Walking North West
 		{
-				  ReadSprite.srcrect.y = 140;
-				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
-				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 8))
-				  {
-					  ReadSprite.srcrect.x = 0;
-				  }
-		}
-			break;
-		case 4:
-		{
-				  ReadSprite.srcrect.y = 210;
-				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
-				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 8))
-				  {
-					  ReadSprite.srcrect.x = 0;
-				  }
-		}
-			break;
-		case 5:
-		{
-				  ReadSprite.srcrect.y = 280;
-				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
-				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 8))
-				  {
-					  ReadSprite.srcrect.x = 0;
-				  }
-		}
-			break;
-		case 6:
-		{
-				  ReadSprite.srcrect.y = 349;
-				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
-				  if (ReadSprite.srcrect.x >= (ReadSprite.spriteWidth * 8))
-				  {
-					  ReadSprite.srcrect.x = 0;
-				  }
+					if (first)
+					{
+						ReadSprite.srcrect.x = 441;
+						first = false;
+					}
+					ReadSprite.srcrect.y = 340;
+					ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+					if (ReadSprite.srcrect.x >= (441 + (ReadSprite.spriteWidth * 8)))
+					{
+						ReadSprite.srcrect.x = 441;
+						first = true;
+					}
 		}
 			break;
 
