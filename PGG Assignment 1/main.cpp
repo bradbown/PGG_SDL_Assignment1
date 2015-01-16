@@ -11,13 +11,6 @@
 bool upimageLoaded = false, downimageLoaded = false, rightimageLoaded = false, leftimageLoaded = false; // Very naughty, Bradley, you shouldn't be using evil globals.
 int upcheckLoad = 0, downcheckLoad = 0, rightcheckLoad = 0, leftcheckload = 0; // Very naughty, such globals, much evil.
 
-//Functions
-
-int moveMap_Left();
-void moveMap_Right(int counter_x, int counter_y, int moveMap_x, int moveMap_y, map earth[], player Player, SDL_Renderer *renderer);
-int moveMap_Up();
-int moveMap_Down();
-
 int main(int argc, char *argv[])
 {
 	// This is our initialisation phase
@@ -110,6 +103,7 @@ int main(int argc, char *argv[])
 	std::cerr << "imageLoaded:" << upimageLoaded;
 
 	bool first_run = false;
+	bool transition = false;
 
 	int moveMap_x = 1;
 	int moveMap_y = 1;
@@ -124,6 +118,7 @@ int main(int argc, char *argv[])
 	bool go = false;
 
 	bool walking = false;
+	bool walking_NE = false;
 
 	while (!first_run)
 	{
@@ -563,19 +558,50 @@ int main(int argc, char *argv[])
 			Player->SetDestination(camera.x + mouse_x, camera.y + mouse_y);
 			cmd_mouseleft = false;
 			walking = true;
+			Player->first = true;
 		}
 
 		Player->MoveToDest();
 		
-		if (walking)
+		if (walking && Player->getPlayerPosition_x() < Player->GetDestX() && Player->getPlayerPosition_y() > Player->GetDestY()) //if walking north east
 		{
+			if (transition)
+			{
+				Player->first = true;
+				transition = false;
+			}
+
 			Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 29, 67, renderer);
  			Player->setID(7);
 			Player->update_idle(2);
+			walking_NE = true;
 		}
-		else
+
+		if (walking_NE && Player->getPlayerPosition_x() == Player->GetDestX() || walking_NE && Player->getPlayerPosition_y() == Player->GetDestY())
 		{
+			transition = true;
+			walking_NE = false;
+		}
+
+		if (walking && Player->getPlayerPosition_x() < Player->GetDestX() && Player->getPlayerPosition_y() == Player->GetDestY()) //if walking east
+		{
+			if (transition)
+			{
+				Player->first = true;
+				Player->setFrametime(20);
+				transition = false;
+			}
+			
+			Player->setID(8);
+			Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 43, 63, renderer);
+			Player->update_idle(2);
+		}
+
+		if (Player->getPlayerPosition_x() == Player->GetDestX() && Player->getPlayerPosition_y() == Player->GetDestY())//else idling
+		{
+			walking = false;
 			Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 36, 69, renderer);
+			Player->setID(3);	
 		}
 		std::cout << Player->getPlayerPosition_x() << ", " << Player->getPlayerPosition_y() << std::endl;
 		Player->update_idle(2);

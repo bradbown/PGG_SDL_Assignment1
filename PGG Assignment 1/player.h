@@ -53,6 +53,8 @@ public:
 
 	bool first = true;
 
+	void setFrametime(int frametime);
+
 protected:
 
 	// This variable will be our handle for the texture

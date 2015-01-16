@@ -112,7 +112,6 @@ void player::update_idle(int in_speed)
 	if (ID == 0)
 	{
 		ReadSprite.frametime = 1;
-
 	}
 
 
@@ -193,6 +192,22 @@ void player::update_idle(int in_speed)
 					  first = false;
 				  }
 				  ReadSprite.srcrect.y = 0;
+				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+				  if (ReadSprite.srcrect.x >= (441 + (ReadSprite.spriteWidth * 8)))
+				  {
+					  ReadSprite.srcrect.x = 441;
+					  first = true;
+				  }
+		}
+			break;
+		case 8:
+		{
+				  if (first)
+				  {
+					  ReadSprite.srcrect.x = 441;
+					  first = false;
+				  }
+				  ReadSprite.srcrect.y = 73;
 				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
 				  if (ReadSprite.srcrect.x >= (441 + (ReadSprite.spriteWidth * 8)))
 				  {
@@ -289,6 +304,11 @@ void player::update_walking(int in_speed)
 
 		} // end of switch
 	} // end of FPS
+}
+
+void player::setFrametime(int frametime)
+{
+	ReadSprite.frametime = frametime;
 }
 
 float player::GetDestX()
