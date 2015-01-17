@@ -73,14 +73,14 @@ void InputManager::InputUpdate()
 				std::cout << "Left Mouse Button has been pressed! \n";
 				cmd_mouseleft = true;
 			}
+		}
 
-			if (incomingEvent.type == SDL_MOUSEBUTTONUP)
+		if (incomingEvent.type == SDL_MOUSEBUTTONUP)
+		{
+			std::cout << "Left Mouse Button was lifted! \n";
+			if (incomingEvent.button.button == SDL_BUTTON_LEFT)
 			{
-				std::cout << "Left Mouse Button was lifted! \n";
-				if (incomingEvent.button.button == SDL_BUTTON_LEFT)
-				{
-					cmd_mouseleft = false;
-				}
+				cmd_mouseleft = false;
 			}
 		}
 	}
