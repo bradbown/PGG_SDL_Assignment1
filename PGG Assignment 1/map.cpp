@@ -25,7 +25,7 @@ bool map::LoadFromPNG(std::string filename, SDL_Renderer *renderer)
 	// Just check we're not being given garbage :P
 	if( filename.empty() )
 	{
-		std::cerr<<"ERROR: Sprite::LoadFromBMP - empty filename given"<<std::endl;
+		std::cerr<<"ERROR: menu::LoadFromPNG - empty filename given"<<std::endl;
 		return false;
 	}
 
@@ -35,7 +35,7 @@ bool map::LoadFromPNG(std::string filename, SDL_Renderer *renderer)
 	if( !image )
 	{
 		// We'll do a quick check here because it's easy to get filenames or directories wrong
-		std::cerr<<"ERROR: Sprite::LoadFromBMP - Oh dear, sorry but I can't find your image file. This brings me great sadness :("<<std::endl;
+		std::cerr<<"ERROR: Sprite::LoadFromPNG - Can't find the image file"<<std::endl;
 		return false;
 	}
 
@@ -107,16 +107,8 @@ void map::AnimDraw(int positionX, int positionY, int vert, int hoz, SDL_Renderer
 
 void map::update(int in_speed)
 {
-
-
-	
-
-	//if (FPS / ReadSprite.frametime == in_speed)
-	//{
-		//ReadSprite.frametime = 0;
-
-		switch (ID)
-		{
+	switch (ID)
+	{
 
 		case 0:
 		{
@@ -142,28 +134,28 @@ void map::update(int in_speed)
 
 		case 2:
 		{
-				  ReadSprite.srcrect.y = 190;
-				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
-				  if (ReadSprite.srcrect.x >= ReadSprite.textureWidth)
-				  {
-					  ReadSprite.srcrect.x = 0;
-				  }
+					ReadSprite.srcrect.y = 190;
+					ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+					if (ReadSprite.srcrect.x >= ReadSprite.textureWidth)
+					{
+						ReadSprite.srcrect.x = 0;
+					}
 		}
 			break;
 			
 		case 3:
 		{
-				  ReadSprite.srcrect.y = 229;
-				  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
-				  if (ReadSprite.srcrect.x >= ReadSprite.textureWidth)
-				  {
-					  ReadSprite.srcrect.x = 0;
-				  }
+					ReadSprite.srcrect.y = 229;
+					ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+					if (ReadSprite.srcrect.x >= ReadSprite.textureWidth)
+					{
+						ReadSprite.srcrect.x = 0;
+					}
 		}
 			break;
 
-		} // end of switch
-	//} // end of FPS
+	}
+
 }
 
 void map::setID(int IDNum)

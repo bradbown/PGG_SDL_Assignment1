@@ -13,7 +13,7 @@ InputManager::~InputManager()
 
 void InputManager::InputUpdate()
 {
-	cmd_forwards = cmd_backwards = cmd_left = cmd_right = cmd_space, cmd_mouseleft = false;
+	cmd_forwards = cmd_backwards = cmd_left = cmd_right = cmd_space, cmd_mouseleft, cmd_escape = false;
 
 
 	SDL_Event incomingEvent;
@@ -48,7 +48,7 @@ void InputManager::InputUpdate()
 			switch (incomingEvent.key.keysym.sym)
 			{
 			case SDLK_ESCAPE:
-				go = false;
+				cmd_escape = true;
 				break;
 			case SDLK_LEFT:
 				cmd_left = true;

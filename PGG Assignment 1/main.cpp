@@ -7,6 +7,7 @@
 #include "map.h"
 #include "player.h"
 #include "InputManager.h"
+#include "menu.h"
 
 bool upimageLoaded = false, downimageLoaded = false, rightimageLoaded = false, leftimageLoaded = false; // Very naughty, Bradley, you shouldn't be using evil globals.
 int upcheckLoad = 0, downcheckLoad = 0, rightcheckLoad = 0, leftcheckload = 0; // Very naughty, such globals, much evil.
@@ -70,6 +71,39 @@ int main(int argc, char *argv[])
 
 	InputManager *Input = new InputManager();
 
+	menu *mainmenu = new menu();
+	menu *play_button = new menu();
+	menu *help_button = new menu();
+	menu *quit_button = new menu();
+
+	mainmenu->LoadFromPNG("../Assets/mainmenu_bg.png", renderer);
+	mainmenu->setPosition_x(0);
+	mainmenu->setPosition_y(0);
+
+	play_button->LoadFromPNG("../Assets/play_button_sheet.png", renderer);
+	play_button->setPosition_x(524);
+	play_button->setPosition_y(158);
+
+	bool menu = true;
+
+	while (menu)
+	{
+		SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 0xFF);
+		SDL_RenderClear(renderer);
+
+		Input->InputUpdate();
+
+		if (Input->cmd_escape)
+		{
+			menu = false;
+		}
+
+		mainmenu->Draw(mainmenu->getPosition_x(), mainmenu->getPosition_y(), renderer);
+		play_button->AnimDraw(play_button->getPosition_x(), play_button->getPosition_y(), 3, 1, renderer);
+		play_button->update(1);
+		SDL_RenderPresent(renderer);
+	}
+
 	map *earth[1000];
 	for (int i = 0; i < 1000; i++)
 	{
@@ -84,6 +118,7 @@ int main(int argc, char *argv[])
 		earth[i]->setMapPosition_x(73);
 		earth[i]->setMapPosition_y(18.5);
 	}
+
 
 	player *Player = new player();
 	Player->LoadFromPNG("../Assets/player_full.png", renderer);
@@ -103,6 +138,7 @@ int main(int argc, char *argv[])
 	std::cerr << "imageLoaded:" << upimageLoaded;
 
 	bool first_run = false;
+
 	bool transition = false;
 
 	int moveMap_x = 1;
@@ -206,7 +242,6 @@ int main(int argc, char *argv[])
 
 	bool cmd_forwards, cmd_backwards, cmd_left, cmd_right, cmd_space, cmd_mouseleft;
 	cmd_forwards = cmd_backwards = cmd_left = cmd_right = cmd_space = cmd_mouseleft = false;
-
 
 	//Main Game Loop
 	while (go)
@@ -790,6 +825,7 @@ int main(int argc, char *argv[])
 		delete earth[i];
 	}
 	delete Player;
+	delete mainmenu;
 
 	SDL_DestroyWindow(window); // Destroy the window
 	SDL_Quit(); // Terminate SDL
