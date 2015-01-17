@@ -81,11 +81,24 @@ int main(int argc, char *argv[])
 	mainmenu->setPosition_y(0);
 
 	play_button->LoadFromPNG("../Assets/play_button_sheet.png", renderer);
-	play_button->setPosition_x(524);
+	play_button->setPosition_x(424);
 	play_button->setPosition_y(158);
 
+	help_button->LoadFromPNG("../Assets/button_readme.png", renderer);
+	help_button->setPosition_x(424);
+	help_button->setPosition_y(198);
+
+	quit_button->LoadFromPNG("../Assets/button_quit.png", renderer);
+	quit_button->setPosition_x(424);
+	quit_button->setPosition_y(238);
+
 	bool menu = true;
+	bool first_run = false;
+	bool go = false;
+
 	bool play_pressed = false;
+	bool help_pressed = false;
+	bool quit_pressed = false;
 
 	while (menu)
 	{
@@ -106,20 +119,57 @@ int main(int argc, char *argv[])
 
 		mainmenu->Draw(mainmenu->getPosition_x(), mainmenu->getPosition_y(), renderer);
 		play_button->AnimDraw(play_button->getPosition_x(), play_button->getPosition_y(), 3, 1, renderer);
+		help_button->AnimDraw(help_button->getPosition_x(), help_button->getPosition_y(), 3, 1, renderer);
+		quit_button->AnimDraw(quit_button->getPosition_x(), quit_button->getPosition_y(), 3, 1, renderer);
 
-		if (Input->cmd_mouseleft && Input->mouse_x >= 524 && Input->mouse_x <= 629 && Input->mouse_y >= 158 && Input->mouse_y <= 188)
+		std::cout << Input->mouse_x << ", " << Input->mouse_y << std::endl;
+
+		if (Input->cmd_mouseleft && Input->mouse_x >= 424 && Input->mouse_x <= 754 && Input->mouse_y >= 158 && Input->mouse_y <= 188)
 		{
 			play_button->setID(2);
 			play_pressed = true;
 		}
 		
-		else if (Input->mouse_x >= 524 && Input->mouse_x <= 629 && Input->mouse_y >= 158 && Input->mouse_y <= 188)
+		else if (Input->mouse_x >= 424 && Input->mouse_x <= 754 && Input->mouse_y >= 158 && Input->mouse_y <= 188)
 		{
 			play_button->setID(1);
 		}
+
 		else
 		{
 			play_button->setID(0);
+		}
+
+		if (Input->cmd_mouseleft && Input->mouse_x >= 424 && Input->mouse_x <= 754 && Input->mouse_y >= 198 && Input->mouse_y <= 228)
+		{
+			help_button->setID(2);
+			help_pressed = true;
+		}
+
+		else if (Input->mouse_x >= 424 && Input->mouse_x <= 754 && Input->mouse_y >= 198 && Input->mouse_y <= 228)
+		{
+			help_button->setID(1);
+		}
+
+		else
+		{
+			help_button->setID(0);
+		}
+
+		if (Input->cmd_mouseleft && Input->mouse_x >= 424 && Input->mouse_x <= 754 && Input->mouse_y >= 238 && Input->mouse_y <= 288)
+		{
+			quit_button->setID(2);
+			quit_pressed = true;
+		}
+
+		else if (Input->mouse_x >= 424 && Input->mouse_x <= 754 && Input->mouse_y >= 238 && Input->mouse_y <= 268)
+		{
+			quit_button->setID(1);
+		}
+
+		else
+		{
+			quit_button->setID(0);
 		}
 
 		if (Input->cmd_mouseleft_up && play_pressed)
@@ -127,7 +177,17 @@ int main(int argc, char *argv[])
 			menu = false;
 		}
 
+		if (Input->cmd_mouseleft_up && quit_pressed)
+		{
+			menu = false;
+			first_run = true;
+			go = false;
+
+		}
+
 		play_button->update(1);
+		help_button->update(1);
+		quit_button->update(1);
 		SDL_RenderPresent(renderer);
 	}
 
@@ -164,8 +224,6 @@ int main(int argc, char *argv[])
 	std::cerr << "checkload:" << upcheckLoad;
 	std::cerr << "imageLoaded:" << upimageLoaded;
 
-	bool first_run = false;
-
 	bool transition = false;
 
 	int moveMap_x = 1;
@@ -177,8 +235,6 @@ int main(int argc, char *argv[])
 
 	int counter_x = 0;
 	int counter_y = 0;
-
-	bool go = false;
 
 	bool walking = false;
 	bool walking_NE = false;
