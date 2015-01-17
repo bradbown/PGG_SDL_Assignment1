@@ -84,4 +84,11 @@ void InputManager::InputUpdate()
 			}
 		}
 	}
+
+	SDL_PumpEvents();
+	if (SDL_MOUSEMOTION)
+	{
+		SDL_GetMouseState(&mouse_x, &mouse_y);
+	}
+
 }

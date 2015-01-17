@@ -88,6 +88,11 @@ int main(int argc, char *argv[])
 
 	while (menu)
 	{
+		if (Input->first)
+		{
+			Input->cmd_mouseleft = false;
+			Input->first = false;
+		}
 		SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 0xFF);
 		SDL_RenderClear(renderer);
 
@@ -100,6 +105,20 @@ int main(int argc, char *argv[])
 
 		mainmenu->Draw(mainmenu->getPosition_x(), mainmenu->getPosition_y(), renderer);
 		play_button->AnimDraw(play_button->getPosition_x(), play_button->getPosition_y(), 3, 1, renderer);
+		if (Input->mouse_x >= 524 && Input->mouse_x <= 629 && Input->mouse_y >= 158 && Input->mouse_y <= 188)
+		{
+			play_button->setID(1);
+		}
+
+		if (Input->cmd_mouseleft && Input->mouse_x >= 524 && Input->mouse_x <= 629 && Input->mouse_y >= 158 && Input->mouse_y <= 188)
+		{
+			play_button->setID(2);
+		}
+		else
+		{
+			play_button->setID(0);
+		}
+
 		play_button->update(1);
 		SDL_RenderPresent(renderer);
 	}
@@ -826,6 +845,7 @@ int main(int argc, char *argv[])
 	}
 	delete Player;
 	delete mainmenu;
+	delete Input;
 
 	SDL_DestroyWindow(window); // Destroy the window
 	SDL_Quit(); // Terminate SDL
