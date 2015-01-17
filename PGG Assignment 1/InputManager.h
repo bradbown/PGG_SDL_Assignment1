@@ -16,7 +16,7 @@ public:
 	bool go;
 	bool first = true;
 
-	bool cmd_forwards, cmd_backwards, cmd_left, cmd_right, cmd_space, cmd_mouseleft, cmd_escape;
+	bool cmd_forwards, cmd_backwards, cmd_left, cmd_right, cmd_space, cmd_mouseleft, cmd_mouseleft_up, cmd_escape;
 
 	int mouse_x = 0;
 	int mouse_y = 0;

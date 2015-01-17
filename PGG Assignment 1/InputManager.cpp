@@ -13,7 +13,7 @@ InputManager::~InputManager()
 
 void InputManager::InputUpdate()
 {
-	cmd_forwards = cmd_backwards = cmd_left = cmd_right = cmd_space, cmd_mouseleft, cmd_escape = false;
+	cmd_forwards = cmd_backwards = cmd_left = cmd_right = cmd_space, cmd_mouseleft, cmd_mouseleft_up, cmd_escape = false;
 
 
 	SDL_Event incomingEvent;
@@ -72,15 +72,17 @@ void InputManager::InputUpdate()
 			{
 				std::cout << "Left Mouse Button has been pressed! \n";
 				cmd_mouseleft = true;
+				cmd_mouseleft_up = false;
 			}
 		}
 
 		if (incomingEvent.type == SDL_MOUSEBUTTONUP)
 		{
-			std::cout << "Left Mouse Button was lifted! \n";
 			if (incomingEvent.button.button == SDL_BUTTON_LEFT)
 			{
+				std::cout << "Left Mouse Button was lifted! \n";
 				cmd_mouseleft = false;
+				cmd_mouseleft_up = true;
 			}
 		}
 	}

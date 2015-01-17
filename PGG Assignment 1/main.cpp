@@ -85,6 +85,7 @@ int main(int argc, char *argv[])
 	play_button->setPosition_y(158);
 
 	bool menu = true;
+	bool play_pressed = false;
 
 	while (menu)
 	{
@@ -109,7 +110,9 @@ int main(int argc, char *argv[])
 		if (Input->cmd_mouseleft && Input->mouse_x >= 524 && Input->mouse_x <= 629 && Input->mouse_y >= 158 && Input->mouse_y <= 188)
 		{
 			play_button->setID(2);
+			play_pressed = true;
 		}
+		
 		else if (Input->mouse_x >= 524 && Input->mouse_x <= 629 && Input->mouse_y >= 158 && Input->mouse_y <= 188)
 		{
 			play_button->setID(1);
@@ -117,6 +120,11 @@ int main(int argc, char *argv[])
 		else
 		{
 			play_button->setID(0);
+		}
+
+		if (Input->cmd_mouseleft_up && play_pressed)
+		{
+			menu = false;
 		}
 
 		play_button->update(1);
@@ -311,53 +319,6 @@ int main(int argc, char *argv[])
 		SDL_Event incomingEvent;
 		while (SDL_PollEvent(&incomingEvent))
 		{
-			switch (incomingEvent.type)
-			{
-			case SDL_QUIT:
-				go = false;
-				break;
-
-				//When a key is lifted
-			case SDL_KEYUP:
-				switch (incomingEvent.key.keysym.sym)
-				{
-				case SDLK_LEFT:
-					cmd_left = false;
-					break;
-				case SDLK_RIGHT:
-					cmd_right = false;
-					break;
-				case SDLK_UP:
-					cmd_forwards = false;
-					break;
-				case SDLK_DOWN:
-					cmd_backwards = false;
-					break;
-				}
-				break;
-				//When a key is pressed
-			case SDL_KEYDOWN:
-				switch (incomingEvent.key.keysym.sym)
-				{
-				case SDLK_ESCAPE:
-					go = false;
-					break;
-				case SDLK_LEFT:
-					cmd_left = true;
-					break;
-				case SDLK_RIGHT:
-					cmd_right = true;
-					break;
-				case SDLK_UP:
-					cmd_forwards = true;
-					break;
-				case SDLK_DOWN:
-					cmd_backwards = true;
-					break;
-				}
-				break;
-			}
-
 			if (incomingEvent.type == SDL_MOUSEBUTTONDOWN)
 			{
 				if (incomingEvent.button.button == SDL_BUTTON_LEFT)
@@ -365,33 +326,22 @@ int main(int argc, char *argv[])
 					std::cout << "Left Mouse Button has been pressed! \n";
 					cmd_mouseleft = true;
 				}
+			}
 
-				if (incomingEvent.type == SDL_MOUSEBUTTONUP)
+			if (incomingEvent.type == SDL_MOUSEBUTTONUP)
+			{
+				std::cout << "Left Mouse Button was lifted! \n";
+				if (incomingEvent.button.button == SDL_BUTTON_LEFT)
 				{
-					std::cout << "Left Mouse Button was lifted! \n";
-					if (incomingEvent.button.button == SDL_BUTTON_LEFT)
-					{
-						cmd_mouseleft = false;
-					}
+					cmd_mouseleft = false;
 				}
 			}
+			
 		}
 
-		if (cmd_forwards)
+		if (Input->cmd_escape)
 		{
-			Player->setID(1);
-		}
-		if (cmd_right)
-		{
-			Player->setID(2);
-		}
-		if (cmd_backwards)
-		{
-			Player->setID(5);
-		}
-		if (cmd_left)
-		{
-			Player->setID(6);
+			go = false;;
 		}
 
 		// Draw our world
@@ -831,7 +781,7 @@ int main(int argc, char *argv[])
 			Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 36, 69, renderer);
 			Player->update_idle(2);
 		}
-		std::cout << Player->getPlayerPosition_x() << ", " << Player->getPlayerPosition_y() << std::endl;
+		//std::cout << Player->getPlayerPosition_x() << ", " << Player->getPlayerPosition_y() << std::endl;
 		Player->update_idle(2);
 		//Player->update_walking(2);
 		SDL_RenderPresent(renderer);
