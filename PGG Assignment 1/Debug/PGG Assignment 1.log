@@ -1,50 +1,67 @@
-﻿Build started 17/01/2015 16:59:26.
+﻿Build started 17/01/2015 23:40:07.
      1>Project "G:\Year 2\Programming for Graphics and Games\PGG_SDL_Assignment1\PGG Assignment 1\PGG Assignment 1.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"..\SDKs\SDL\SDL2-devel-2.0.3-VC\SDL2-2.0.3\include" /I"..\SDKs\SDL\SDL2_image-2.0.0\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(98): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(99): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(126): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(127): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(128): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(129): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(192): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(193): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(194): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(297): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(297): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(313): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(347): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(441): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(447): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(466): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(472): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(491): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(497): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(101): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(102): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(105): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(106): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(109): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(110): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(137): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(138): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(139): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(140): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(203): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(204): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(205): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(309): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(309): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(325): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(344): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(345): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(347): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(368): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(463): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(464): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(468): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(469): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(487): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(493): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(501): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
      1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(517): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
      1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(523): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(542): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(548): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(567): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(573): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(593): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(599): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(618): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(624): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(634): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(704): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(719): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(732): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(748): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(763): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(778): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(793): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(808): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(846): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(850): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(851): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(852): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(529): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(546): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(552): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(561): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(577): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(583): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(589): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(606): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(612): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(620): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(636): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(642): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(648): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(666): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(672): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(680): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(696): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(702): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(708): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(716): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(722): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(788): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(803): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(816): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(832): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(847): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(862): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(877): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(892): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>g:\year 2\programming for graphics and games\pgg_sdl_assignment1\pgg assignment 1\main.cpp(930): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"G:\Year 2\Programming for Graphics and Games\PGG_SDL_Assignment1\Debug\PGG Assignment 1.exe" /INCREMENTAL /NOLOGO /LIBPATH:"..\SDKs\SDL\SDL2-devel-2.0.3-VC\SDL2-2.0.3\lib\x86" /LIBPATH:"..\SDKs\SDL\SDL2_image-2.0.0\lib\x86" SDL2.lib SDL2main.lib SDL2_image.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"G:\Year 2\Programming for Graphics and Games\PGG_SDL_Assignment1\Debug\PGG Assignment 1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"G:\Year 2\Programming for Graphics and Games\PGG_SDL_Assignment1\Debug\PGG Assignment 1.lib" /MACHINE:X86 Debug\InputManager.obj
          Debug\main.obj
@@ -57,4 +74,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.71
+Time Elapsed 00:00:00.77

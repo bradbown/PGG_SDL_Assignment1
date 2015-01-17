@@ -75,7 +75,10 @@ int main(int argc, char *argv[])
 	menu *play_button = new menu();
 	menu *help_button = new menu();
 	menu *quit_button = new menu();
-	menu *cursor = new menu();
+
+	menu *menu_cursor = new menu();
+	menu *ingame_cursor = new menu();
+	menu *interact_cursor = new menu();
 
 	mainmenu->LoadFromPNG("../Assets/mainmenu_bg.png", renderer);
 	mainmenu->setPosition_x(0);
@@ -93,10 +96,18 @@ int main(int argc, char *argv[])
 	quit_button->setPosition_x(424);
 	quit_button->setPosition_y(238);
 
-	cursor->LoadFromPNG("../Assets/cursor.png", renderer);
 	SDL_ShowCursor(0);
-	cursor->setPosition_x(Input->mouse_x);
-	cursor->setPosition_y(Input->mouse_y);
+	menu_cursor->LoadFromPNG("../Assets/cursor.png", renderer);
+	menu_cursor->setPosition_x(Input->mouse_x);
+	menu_cursor->setPosition_y(Input->mouse_y);
+
+	ingame_cursor->LoadFromPNG("../Assets/cursor_ingame.png", renderer);
+	ingame_cursor->setPosition_x(Input->mouse_x);
+	ingame_cursor->setPosition_y(Input->mouse_y);
+
+	interact_cursor->LoadFromPNG("../Assets/cursor_interact.png", renderer);
+	interact_cursor->setPosition_x(Input->mouse_x);
+	interact_cursor->setPosition_y(Input->mouse_y);
 
 	bool menu = true;
 	bool first_run = false;
@@ -189,11 +200,11 @@ int main(int argc, char *argv[])
 
 		}
 
-		cursor->setPosition_x(Input->mouse_x);
-		cursor->setPosition_y(Input->mouse_y);
-		cursor->Draw(cursor->getPosition_x(), cursor->getPosition_y(), renderer);
+		menu_cursor->setPosition_x(Input->mouse_x);
+		menu_cursor->setPosition_y(Input->mouse_y);
+		menu_cursor->Draw(menu_cursor->getPosition_x(), menu_cursor->getPosition_y(), renderer);
 
-		cursor->update(1);
+		menu_cursor->update(1);
 		play_button->update(1);
 		help_button->update(1);
 		quit_button->update(1);
@@ -204,18 +215,18 @@ int main(int argc, char *argv[])
 	for (int i = 0; i < 1000; i++)
 	{
 		earth[i] = new map();
-	}
-	for (int i = 0; i < 1000; i++)
-	{
 		earth[i]->LoadFromPNG("../Assets/earth.png", renderer);
-	}
-	for (int i = 0; i < 1000; i++)
-	{
 		earth[i]->setMapPosition_x(73);
 		earth[i]->setMapPosition_y(18.5);
 	}
 
-
+	map *boxes[25];
+	for (int i = 0; i < 25; i++)
+	{
+		boxes[i] = new map;
+		boxes[i]->LoadFromPNG("../Assets/boxes.png", renderer);
+	}
+	
 	player *Player = new player();
 	Player->LoadFromPNG("../Assets/player_full.png", renderer);
 	Player->setPlayerPosition_x(100);
@@ -241,6 +252,7 @@ int main(int argc, char *argv[])
 	int mouse_x = 0;
 	int mouse_y = 0;
 
+	bool mouse_interact = false;
 
 	int counter_x = 0;
 	int counter_y = 0;
@@ -324,6 +336,15 @@ int main(int argc, char *argv[])
 				}
 				earth[i]->setMapPosition_y(earth[i]->getMapPosition_y() * counter_y);
 			}
+		}
+
+		for (int i = 0; i < 25; i++)
+		{
+			boxes[i]->setID(0);
+			boxes[i]->setMapPosition_x(rand() % 1500);
+			boxes[i]->setMapPosition_y(rand() % 750);
+
+			boxes[i]->AnimDraw(boxes[i]->getMapPosition_x(), boxes[i]->getMapPosition_y(), 1, 8, renderer);
 		}
 
 		SDL_RenderPresent(renderer);
@@ -423,6 +444,31 @@ int main(int argc, char *argv[])
 		if (SDL_MOUSEMOTION)
 		{
 			SDL_GetMouseState(&mouse_x, &mouse_y);
+
+			for (int i = 0; i < 25; i++)
+			{
+				if (mouse_x >= boxes[i]->getMapPosition_x() && mouse_x <= boxes[i]->getMapPosition_x() + 36 && mouse_y >= boxes[i]->getMapPosition_y() && mouse_y <= boxes[i]->getMapPosition_y() + 21)
+				{
+					mouse_interact = true;
+					break;
+				}
+				else
+				{
+					mouse_interact = false;
+				}
+			}
+
+			if (mouse_interact)
+			{
+				interact_cursor->setPosition_x(Input->mouse_x);
+				interact_cursor->setPosition_y(Input->mouse_y);
+			}
+			else
+			{
+				ingame_cursor->setPosition_x(Input->mouse_x);
+				ingame_cursor->setPosition_y(Input->mouse_y);
+			}
+
 			if (mouse_x <= 720 && mouse_x >= 670)	//Move screen to the right
 			{
 				camera.x += 1;
@@ -449,6 +495,11 @@ int main(int argc, char *argv[])
 					}
 				}
 				//Player->setPlayerPosition_x(-3);
+
+				for (int i = 0; i < 25; i++)
+				{
+					boxes[i]->AnimDraw(boxes[i]->getMapPosition_x() + camera.x, boxes[i]->getMapPosition_y() + camera.y, 1, 8, renderer);
+				}
 			}
 			else
 			{
@@ -472,6 +523,10 @@ int main(int argc, char *argv[])
 						earth[i]->AnimDraw(earth[i]->getMapPosition_x() - camera.x, earth[i]->getMapPosition_y() - camera.y, 7, 8, renderer);
 						counter_x++;
 					}
+				}
+				for (int i = 0; i < 25; i++)
+				{
+					boxes[i]->AnimDraw(boxes[i]->getMapPosition_x() - camera.x, boxes[i]->getMapPosition_y() - camera.y, 1, 8, renderer);
 				}
 			}
 			if (mouse_x >= 0 && mouse_x <= 50)	//Move screen to the left
@@ -500,6 +555,11 @@ int main(int argc, char *argv[])
 
 				}
 				//Player->setPlayerPosition_x(3);
+
+				for (int i = 0; i < 25; i++)
+				{
+					boxes[i]->AnimDraw(boxes[i]->getMapPosition_x() - camera.x, boxes[i]->getMapPosition_y() - camera.y, 1, 8, renderer);
+				}
 			}
 			else
 			{
@@ -523,6 +583,10 @@ int main(int argc, char *argv[])
 						earth[i]->AnimDraw(earth[i]->getMapPosition_x() - camera.x, earth[i]->getMapPosition_y() - camera.y, 7, 8, renderer);
 						counter_x++;
 					}
+				}
+				for (int i = 0; i < 25; i++)
+				{
+					boxes[i]->AnimDraw(boxes[i]->getMapPosition_x() - camera.x, boxes[i]->getMapPosition_y() - camera.y, 1, 8, renderer);
 				}
 			}
 			if (mouse_y >= 0 && mouse_y <= 50)	//Move screen up
@@ -550,6 +614,11 @@ int main(int argc, char *argv[])
 					}
 				}
 				//Player->setPlayerPosition_y(3);
+
+				for (int i = 0; i < 25; i++)
+				{
+					boxes[i]->AnimDraw(boxes[i]->getMapPosition_x() - camera.x, boxes[i]->getMapPosition_y() - camera.y, 1, 8, renderer);
+				}
 			}
 			else
 			{
@@ -573,6 +642,10 @@ int main(int argc, char *argv[])
 						earth[i]->AnimDraw(earth[i]->getMapPosition_x() - camera.x, earth[i]->getMapPosition_y() - camera.y, 7, 8, renderer);
 						counter_x++;
 					}
+				}
+				for (int i = 0; i < 25; i++)
+				{
+					boxes[i]->AnimDraw(boxes[i]->getMapPosition_x() - camera.x, boxes[i]->getMapPosition_y() - camera.y, 1, 8, renderer);
 				}
 			}
 
@@ -601,6 +674,11 @@ int main(int argc, char *argv[])
 					}
 				}
 				//Player->setPlayerPosition_y(-3);
+
+				for (int i = 0; i < 25; i++)
+				{
+					boxes[i]->AnimDraw(boxes[i]->getMapPosition_x() - camera.x, boxes[i]->getMapPosition_y() - camera.y, 1, 8, renderer);
+				}
 			}
 			else
 			{
@@ -625,6 +703,10 @@ int main(int argc, char *argv[])
 						counter_x++;
 					}
 				}
+				for (int i = 0; i < 25; i++)
+				{
+					boxes[i]->AnimDraw(boxes[i]->getMapPosition_x() - camera.x, boxes[i]->getMapPosition_y() - camera.y, 1, 8, renderer);
+				}
 			}
 		}
 		int frametime = 0;
@@ -636,6 +718,8 @@ int main(int argc, char *argv[])
 			walking = true;
 			Player->first = true;
 		}
+
+		ingame_cursor->Draw(ingame_cursor->getPosition_x(), ingame_cursor->getPosition_y(), renderer);
 
 		Player->MoveToDest();
 
@@ -846,14 +930,7 @@ int main(int argc, char *argv[])
 			Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 36, 69, renderer);
 			Player->update_idle(2);
 		}
-		
-		cursor->setPosition_x(Input->mouse_x);
-		cursor->setPosition_y(Input->mouse_y);
-		cursor->Draw(cursor->getPosition_x(), cursor->getPosition_y(), renderer);
 
-		cursor->update(1);
-
-		Player->update_idle(2);
 		SDL_RenderPresent(renderer);
 	}
 
@@ -863,9 +940,17 @@ int main(int argc, char *argv[])
 	{
 		delete earth[i];
 	}
+	for (int i = 0; i < 25; i++)
+	{
+		delete boxes[i];
+	}
 	delete Player;
 	delete mainmenu;
 	delete Input;
+
+	delete menu_cursor;
+	delete ingame_cursor;
+	delete interact_cursor;
 
 	SDL_DestroyWindow(window); // Destroy the window
 	SDL_Quit(); // Terminate SDL
