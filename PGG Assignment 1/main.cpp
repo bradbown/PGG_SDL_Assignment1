@@ -75,6 +75,7 @@ int main(int argc, char *argv[])
 	menu *play_button = new menu();
 	menu *help_button = new menu();
 	menu *quit_button = new menu();
+	menu *cursor = new menu();
 
 	mainmenu->LoadFromPNG("../Assets/mainmenu_bg.png", renderer);
 	mainmenu->setPosition_x(0);
@@ -91,6 +92,11 @@ int main(int argc, char *argv[])
 	quit_button->LoadFromPNG("../Assets/button_quit.png", renderer);
 	quit_button->setPosition_x(424);
 	quit_button->setPosition_y(238);
+
+	cursor->LoadFromPNG("../Assets/cursor.png", renderer);
+	SDL_ShowCursor(0);
+	cursor->setPosition_x(Input->mouse_x);
+	cursor->setPosition_y(Input->mouse_y);
 
 	bool menu = true;
 	bool first_run = false;
@@ -121,9 +127,7 @@ int main(int argc, char *argv[])
 		play_button->AnimDraw(play_button->getPosition_x(), play_button->getPosition_y(), 3, 1, renderer);
 		help_button->AnimDraw(help_button->getPosition_x(), help_button->getPosition_y(), 3, 1, renderer);
 		quit_button->AnimDraw(quit_button->getPosition_x(), quit_button->getPosition_y(), 3, 1, renderer);
-
-		std::cout << Input->mouse_x << ", " << Input->mouse_y << std::endl;
-
+		
 		if (Input->cmd_mouseleft && Input->mouse_x >= 424 && Input->mouse_x <= 754 && Input->mouse_y >= 158 && Input->mouse_y <= 188)
 		{
 			play_button->setID(2);
@@ -185,6 +189,11 @@ int main(int argc, char *argv[])
 
 		}
 
+		cursor->setPosition_x(Input->mouse_x);
+		cursor->setPosition_y(Input->mouse_y);
+		cursor->Draw(cursor->getPosition_x(), cursor->getPosition_y(), renderer);
+
+		cursor->update(1);
 		play_button->update(1);
 		help_button->update(1);
 		quit_button->update(1);
@@ -837,9 +846,14 @@ int main(int argc, char *argv[])
 			Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 36, 69, renderer);
 			Player->update_idle(2);
 		}
-		//std::cout << Player->getPlayerPosition_x() << ", " << Player->getPlayerPosition_y() << std::endl;
+		
+		cursor->setPosition_x(Input->mouse_x);
+		cursor->setPosition_y(Input->mouse_y);
+		cursor->Draw(cursor->getPosition_x(), cursor->getPosition_y(), renderer);
+
+		cursor->update(1);
+
 		Player->update_idle(2);
-		//Player->update_walking(2);
 		SDL_RenderPresent(renderer);
 	}
 
