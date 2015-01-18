@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 	menu_cursor->setPosition_x(Input->mouse_x);
 	menu_cursor->setPosition_y(Input->mouse_y);
 
-	ingame_cursor->LoadFromPNG("../Assets/cursor_ingame.png", renderer);
+	ingame_cursor->LoadFromPNG("../Assets/cursor_sheet.png", renderer);
 	ingame_cursor->setPosition_x(Input->mouse_x);
 	ingame_cursor->setPosition_y(Input->mouse_y);
 
@@ -219,14 +219,18 @@ int main(int argc, char *argv[])
 		earth[i]->setMapPosition_x(73);
 		earth[i]->setMapPosition_y(18.5);
 	}
-
+	/*
 	map *boxes[25];
 	for (int i = 0; i < 25; i++)
 	{
 		boxes[i] = new map;
 		boxes[i]->LoadFromPNG("../Assets/boxes.png", renderer);
 	}
-	
+	*/
+
+	map *boxes = new map;
+	boxes->LoadFromPNG("../Assets/boxes.png", renderer);
+
 	player *Player = new player();
 	Player->LoadFromPNG("../Assets/player_full.png", renderer);
 	Player->setPlayerPosition_x(100);
@@ -252,8 +256,6 @@ int main(int argc, char *argv[])
 	int mouse_x = 0;
 	int mouse_y = 0;
 
-	bool mouse_interact = false;
-
 	int counter_x = 0;
 	int counter_y = 0;
 
@@ -266,6 +268,10 @@ int main(int argc, char *argv[])
 	bool walking_SW = false;
 	bool walking_S = false;
 	bool walking_N = false;
+
+	bool interact = false;
+	bool over_box = false;
+	bool moveto_box = false;
 
 	while (!first_run)
 	{
@@ -340,17 +346,16 @@ int main(int argc, char *argv[])
 
 		for (int i = 0; i < 25; i++)
 		{
-			boxes[i]->setID(0);
-			boxes[i]->setMapPosition_x(rand() % 1500);
-			boxes[i]->setMapPosition_y(rand() % 750);
-
-			boxes[i]->AnimDraw(boxes[i]->getMapPosition_x(), boxes[i]->getMapPosition_y(), 1, 8, renderer);
+			boxes->setID(0);
+			boxes->setMapPosition_x(350);
+			boxes->setMapPosition_y(400);
+			boxes->Draw(boxes->getMapPosition_x(), boxes->getMapPosition_y(), renderer);
 		}
 
 		SDL_RenderPresent(renderer);
 		first_run = true;
 		go = true;
-
+		ingame_cursor->setID(0);
 	}
 
 	bool cmd_forwards, cmd_backwards, cmd_left, cmd_right, cmd_space, cmd_mouseleft;
@@ -360,6 +365,11 @@ int main(int argc, char *argv[])
 	while (go)
 	{
 		Input->InputUpdate();
+
+		interact_cursor->setPosition_x(Input->mouse_x);
+		interact_cursor->setPosition_y(Input->mouse_y);
+		ingame_cursor->setPosition_x(Input->mouse_x);
+		ingame_cursor->setPosition_y(Input->mouse_y);
 
 		numFrames++;
 
@@ -445,28 +455,21 @@ int main(int argc, char *argv[])
 		{
 			SDL_GetMouseState(&mouse_x, &mouse_y);
 
-			for (int i = 0; i < 25; i++)
+			//&& Input->mouse_x >= 424 && Input->mouse_x <= 754 && Input->mouse_y >= 238 && Input->mouse_y <= 288)
+			if (mouse_x >= boxes->getMapPosition_x() - camera.x && mouse_x <= boxes->getMapPosition_x() + 36 - camera.x && mouse_y >= boxes->getMapPosition_y() - camera.y && mouse_y <= boxes->getMapPosition_y() + 21 - camera.y)
 			{
-				if (mouse_x >= boxes[i]->getMapPosition_x() && mouse_x <= boxes[i]->getMapPosition_x() + 36 && mouse_y >= boxes[i]->getMapPosition_y() && mouse_y <= boxes[i]->getMapPosition_y() + 21)
-				{
-					mouse_interact = true;
-					break;
-				}
-				else
-				{
-					mouse_interact = false;
-				}
-			}
-
-			if (mouse_interact)
-			{
-				interact_cursor->setPosition_x(Input->mouse_x);
-				interact_cursor->setPosition_y(Input->mouse_y);
+				ingame_cursor->setID(1);
+				ingame_cursor->update_cursor(1);
+				//interact_cursor->Draw(interact_cursor->getPosition_x(), interact_cursor->getPosition_y(), renderer);
+				over_box = true;
+				std::cout << "Over Box\n";
 			}
 			else
 			{
-				ingame_cursor->setPosition_x(Input->mouse_x);
-				ingame_cursor->setPosition_y(Input->mouse_y);
+				ingame_cursor->setID(0);
+				ingame_cursor->update_cursor(1);
+				over_box = false;
+			//	ingame_cursor->Draw(ingame_cursor->getPosition_x(), ingame_cursor->getPosition_y(), renderer);
 			}
 
 			if (mouse_x <= 720 && mouse_x >= 670)	//Move screen to the right
@@ -496,10 +499,7 @@ int main(int argc, char *argv[])
 				}
 				//Player->setPlayerPosition_x(-3);
 
-				for (int i = 0; i < 25; i++)
-				{
-					boxes[i]->AnimDraw(boxes[i]->getMapPosition_x() + camera.x, boxes[i]->getMapPosition_y() + camera.y, 1, 8, renderer);
-				}
+				boxes->Draw(boxes->getMapPosition_x() + camera.x, boxes->getMapPosition_y() + camera.y, renderer);
 			}
 			else
 			{
@@ -524,10 +524,8 @@ int main(int argc, char *argv[])
 						counter_x++;
 					}
 				}
-				for (int i = 0; i < 25; i++)
-				{
-					boxes[i]->AnimDraw(boxes[i]->getMapPosition_x() - camera.x, boxes[i]->getMapPosition_y() - camera.y, 1, 8, renderer);
-				}
+
+				boxes->Draw(boxes->getMapPosition_x() - camera.x, boxes->getMapPosition_y() - camera.y, renderer);
 			}
 			if (mouse_x >= 0 && mouse_x <= 50)	//Move screen to the left
 			{
@@ -556,10 +554,7 @@ int main(int argc, char *argv[])
 				}
 				//Player->setPlayerPosition_x(3);
 
-				for (int i = 0; i < 25; i++)
-				{
-					boxes[i]->AnimDraw(boxes[i]->getMapPosition_x() - camera.x, boxes[i]->getMapPosition_y() - camera.y, 1, 8, renderer);
-				}
+				boxes->Draw(boxes->getMapPosition_x() - camera.x, boxes->getMapPosition_y() - camera.y, renderer);
 			}
 			else
 			{
@@ -584,10 +579,9 @@ int main(int argc, char *argv[])
 						counter_x++;
 					}
 				}
-				for (int i = 0; i < 25; i++)
-				{
-					boxes[i]->AnimDraw(boxes[i]->getMapPosition_x() - camera.x, boxes[i]->getMapPosition_y() - camera.y, 1, 8, renderer);
-				}
+
+				boxes->Draw(boxes->getMapPosition_x() - camera.x, boxes->getMapPosition_y() - camera.y, renderer);
+
 			}
 			if (mouse_y >= 0 && mouse_y <= 50)	//Move screen up
 			{
@@ -615,10 +609,7 @@ int main(int argc, char *argv[])
 				}
 				//Player->setPlayerPosition_y(3);
 
-				for (int i = 0; i < 25; i++)
-				{
-					boxes[i]->AnimDraw(boxes[i]->getMapPosition_x() - camera.x, boxes[i]->getMapPosition_y() - camera.y, 1, 8, renderer);
-				}
+				boxes->Draw(boxes->getMapPosition_x() - camera.x, boxes->getMapPosition_y() - camera.y, renderer);
 			}
 			else
 			{
@@ -643,10 +634,8 @@ int main(int argc, char *argv[])
 						counter_x++;
 					}
 				}
-				for (int i = 0; i < 25; i++)
-				{
-					boxes[i]->AnimDraw(boxes[i]->getMapPosition_x() - camera.x, boxes[i]->getMapPosition_y() - camera.y, 1, 8, renderer);
-				}
+
+				boxes->Draw(boxes->getMapPosition_x() - camera.x, boxes->getMapPosition_y() - camera.y, renderer);
 			}
 
 			if (mouse_y <= 640 && mouse_y >= 590)	//Move screen down
@@ -674,11 +663,9 @@ int main(int argc, char *argv[])
 					}
 				}
 				//Player->setPlayerPosition_y(-3);
-
-				for (int i = 0; i < 25; i++)
-				{
-					boxes[i]->AnimDraw(boxes[i]->getMapPosition_x() - camera.x, boxes[i]->getMapPosition_y() - camera.y, 1, 8, renderer);
-				}
+				
+				boxes->Draw(boxes->getMapPosition_x() - camera.x, boxes->getMapPosition_y() - camera.y, renderer);
+			
 			}
 			else
 			{
@@ -703,15 +690,13 @@ int main(int argc, char *argv[])
 						counter_x++;
 					}
 				}
-				for (int i = 0; i < 25; i++)
-				{
-					boxes[i]->AnimDraw(boxes[i]->getMapPosition_x() - camera.x, boxes[i]->getMapPosition_y() - camera.y, 1, 8, renderer);
-				}
+
+				boxes->Draw(boxes->getMapPosition_x() - camera.x, boxes->getMapPosition_y() - camera.y, renderer);
 			}
 		}
 		int frametime = 0;
 
-		if (cmd_mouseleft)
+		if (cmd_mouseleft && !over_box)
 		{
 			Player->SetDestination(camera.x + mouse_x, camera.y + mouse_y);
 			cmd_mouseleft = false;
@@ -719,9 +704,39 @@ int main(int argc, char *argv[])
 			Player->first = true;
 		}
 
-		ingame_cursor->Draw(ingame_cursor->getPosition_x(), ingame_cursor->getPosition_y(), renderer);
+		if (cmd_mouseleft && over_box)
+		{
+			Player->SetDestination(camera.x + mouse_x, camera.y + mouse_y);
+			cmd_mouseleft = false;
+			walking = true;
+			Player->first = true;
+			moveto_box = true;
+		}
 
-		Player->MoveToDest();
+		ingame_cursor->AnimDraw(ingame_cursor->getPosition_x(), ingame_cursor->getPosition_y(), 2, 1, renderer);
+		
+		if (moveto_box)
+		{
+			transition = true;
+			Player->MoveToDest();
+			if (Player->getPlayerPosition_x() == Player->GetDestX() && Player->getPlayerPosition_y() == Player->GetDestY())
+			{
+				if (transition)
+				{
+					Player->first = true;
+					transition = false;
+				}
+				interact = true;
+				Player->setID(13);
+				Player->update_idle(2);
+				Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 28, 64, renderer);
+				//moveto_box = false;
+			}
+		}
+		else
+		{
+			Player->MoveToDest();
+		}
 
 		//Transitioning~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -894,7 +909,7 @@ int main(int argc, char *argv[])
 			walking_NW = true;
 		}
 
-		if (Player->getPlayerPosition_x() == Player->GetDestX() && Player->getPlayerPosition_y() == Player->GetDestY())//else idling
+		if (!interact && Player->getPlayerPosition_x() == Player->GetDestX() && Player->getPlayerPosition_y() == Player->GetDestY())//else idling
 		{
 			walking = false;
 			
@@ -940,10 +955,8 @@ int main(int argc, char *argv[])
 	{
 		delete earth[i];
 	}
-	for (int i = 0; i < 25; i++)
-	{
-		delete boxes[i];
-	}
+	delete boxes;
+	
 	delete Player;
 	delete mainmenu;
 	delete Input;

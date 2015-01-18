@@ -20,6 +20,7 @@ public:
 	float getPosition_y() const;
 
 	void update(int in_speed);
+	void update_cursor(int in_speed);
 
 	void setID(int IDNum);
 	int getID() const;

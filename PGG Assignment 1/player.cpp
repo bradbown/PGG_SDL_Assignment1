@@ -287,6 +287,25 @@ void player::update_idle(int in_speed)
 		}
 			break;
 
+		//INTERACT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+		case 13:
+		{
+				   if (first)
+				   {
+					   ReadSprite.srcrect.x = 1071;
+					   first = false;
+				   }
+				   ReadSprite.srcrect.y = 134;
+				   ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+				   if (ReadSprite.srcrect.x >= (1071 + (ReadSprite.spriteWidth * 9)))
+				   {
+					   ReadSprite.srcrect.x = 1071;
+					   first = true;
+				   }
+		}
+			break;
+
 		} // end of switch
 	} // end of FPS
 }

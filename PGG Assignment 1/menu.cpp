@@ -112,6 +112,35 @@ void menu::update(int in_speed)
 
 }
 
+void menu::update_cursor(int in_speed)
+{
+	switch (ID)
+	{
+
+	case 0:
+	{
+			  ReadSprite.srcrect.y = 0;
+			  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+			  if (ReadSprite.srcrect.x >= ReadSprite.textureWidth)
+			  {
+				  ReadSprite.srcrect.x = 0;
+			  }
+	}
+		break;
+
+	case 1:
+	{
+			  ReadSprite.srcrect.y = 20;
+			  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+			  if (ReadSprite.srcrect.x >= ReadSprite.textureWidth)
+			  {
+				  ReadSprite.srcrect.x = 0;
+			  }
+	}
+		break;
+	}
+}
+
 void menu::setID(int IDNum)
 {
 	ID = IDNum;
