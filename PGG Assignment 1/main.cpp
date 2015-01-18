@@ -8,6 +8,7 @@
 #include "player.h"
 #include "InputManager.h"
 #include "menu.h"
+#include "enemy.h"
 
 bool upimageLoaded = false, downimageLoaded = false, rightimageLoaded = false, leftimageLoaded = false; // Very naughty, Bradley, you shouldn't be using evil globals.
 int upcheckLoad = 0, downcheckLoad = 0, rightcheckLoad = 0, leftcheckload = 0; // Very naughty, such globals, much evil.
@@ -211,15 +212,12 @@ int main(int argc, char *argv[])
 	ui->setPosition_x(0);
 	ui->setPosition_y(540);
 
-<<<<<<< HEAD
 	menu *ui_text = new menu();
 	ui_text->LoadFromPNG("../Assets/text_sheet.png", renderer);
 
 	menu *ui_smg = new menu();
 	ui_smg->LoadFromPNG("../Assets/ui_smg.png", renderer);
 
-=======
->>>>>>> 9a9a33f888b8b6d103ce3d7540fc62833440b9b5
 	map *earth[1000];
 	for (int i = 0; i < 1000; i++)
 	{
@@ -239,6 +237,12 @@ int main(int argc, char *argv[])
 	Player->SetDestination(100, 100);
 	Player->setID(1);
 
+	enemy *ant = new enemy;
+	ant->LoadFromPNG("../Assets/enemy_ant.png", renderer);
+	ant->setEnemyPosition_x(200);
+	ant->setEnemyPosition_y(200);
+	ant->setID(1);
+
 	//Setting Up FPS
 
 	unsigned int lastTime = SDL_GetTicks();
@@ -250,6 +254,7 @@ int main(int argc, char *argv[])
 	std::cerr << "imageLoaded:" << upimageLoaded;
 
 	bool transition = false;
+	bool ant_transition = false;
 
 	int moveMap_x = 1;
 	int moveMap_y = 1;
@@ -269,6 +274,16 @@ int main(int argc, char *argv[])
 	bool walking_SW = false;
 	bool walking_S = false;
 	bool walking_N = false;
+
+	bool ant_walking = false;
+	bool ant_walking_NE = false;
+	bool ant_walking_NW = false;
+	bool ant_walking_E = false;
+	bool ant_walking_W = false;
+	bool ant_walking_SE = false;
+	bool ant_walking_SW = false;
+	bool ant_walking_S = false;
+	bool ant_walking_N = false;
 
 	bool interact = false;
 	bool over_box = false;
@@ -368,6 +383,8 @@ int main(int argc, char *argv[])
 	while (go)
 	{
 		Input->InputUpdate();
+
+		ant->SetDestination(Player->getPlayerPosition_x() - 30, Player->getPlayerPosition_y() + 60);
 
 		ingame_cursor->setPosition_x(Input->mouse_x);
 		ingame_cursor->setPosition_y(Input->mouse_y);
@@ -967,8 +984,146 @@ int main(int argc, char *argv[])
 			Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 36, 69, renderer);
 			Player->update_idle(2);
 		}
+
+		ant->MoveToDest();
+
+		if (ant_walking_N && ant->getEnemyPosition_y() == Player->getPlayerPosition_y())	//transition from North
+		{
+			ant_transition = true;
+			ant_walking_N = false;
+		}
+
+		if (ant_walking_S && ant->getEnemyPosition_y() == Player->getPlayerPosition_y())	//transition from South
+		{
+			ant_transition = true;
+			ant_walking_S = false;
+		}
+
+		if (ant_walking_NE && ant->getEnemyPosition_x() == Player->getPlayerPosition_x() || ant_walking_NE && ant->getEnemyPosition_y() == Player->getPlayerPosition_y())	//transition from North East
+		{
+			ant_transition = true;
+			ant_walking_NE = false;
+		}
+
+		if (ant_walking_E && ant->getEnemyPosition_x() == Player->getPlayerPosition_x())	//transition from East
+		{
+			ant_transition = true;
+			ant_walking_E = false;
+		}
+
+		if (ant_walking_SE && ant->getEnemyPosition_x() == Player->getPlayerPosition_x() || ant_walking_SE && ant->getEnemyPosition_y() == Player->GetDestY())	//transition from South East
+		{
+			ant_transition = true;
+			ant_walking_SE = false;
+		}
+
+		if (ant_walking_SW && ant->getEnemyPosition_x() == Player->getPlayerPosition_x() || ant_walking_SW && ant->getEnemyPosition_y() == Player->getPlayerPosition_y())	//transition from South West
+		{
+			ant_transition = true;
+			ant_walking_SW = false;
+		}
+
+		if (ant_walking_W && ant->getEnemyPosition_x() == Player->getPlayerPosition_x())	//transition from West
+		{
+			ant_transition = true;
+			ant_walking_W = false;
+		}
+
+		if (ant_walking_NW && ant->getEnemyPosition_x() == Player->getPlayerPosition_x() || ant_walking_NW && ant->getEnemyPosition_y() == Player->getPlayerPosition_y())	//transition from North West
+		{
+			ant_transition = true;
+			ant_walking_NW = false;
+		}
+
+		if (ant->getEnemyPosition_x() < Player->getPlayerPosition_x() && ant->getEnemyPosition_y() > Player->getPlayerPosition_y())
+		{
+			if (ant_transition)
+			{
+				ant->first = true;
+				ant->setFrametime(20);
+				ant_transition = false;
+			}
+			ant->setID(1);
+		}
+		if (ant->getEnemyPosition_x() < Player->getPlayerPosition_x())
+		{
+			if (ant_transition)
+			{
+				ant->first = true;
+				ant->setFrametime(20);
+				ant_transition = false;
+			}
+			ant->setID(2);
+		}
+		if (ant->getEnemyPosition_x() < Player->getPlayerPosition_x() && ant->getEnemyPosition_y() < Player->getPlayerPosition_y())
+		{
+			if (ant_transition)
+			{
+				ant->first = true;
+				ant->setFrametime(20);
+				ant_transition = false;
+			}
+			ant->setID(3);
+		}
+		if (ant->getEnemyPosition_x() > Player->getPlayerPosition_x() && ant->getEnemyPosition_y() < Player->getPlayerPosition_y())
+		{
+			if (ant_transition)
+			{
+				ant->first = true;
+				ant->setFrametime(20);
+				ant_transition = false;
+			}
+			ant->setID(4);
+		}
+		if (ant->getEnemyPosition_x() > Player->getPlayerPosition_x())
+		{
+			if (ant_transition)
+			{
+				ant->first = true;
+				ant->setFrametime(20);
+				ant_transition = false;
+			}
+			ant->setID(5);
+		}
+		if (ant->getEnemyPosition_x() > Player->getPlayerPosition_x() && ant->getEnemyPosition_y() > Player->getPlayerPosition_y())
+		{
+			if (ant_transition)
+			{
+				ant->first = true;
+				ant->setFrametime(20);
+				ant_transition = false;
+			}
+			ant->setID(6);
+		}
+
+		if (ant->getID() == 1)
+		{
+			ant->AnimDraw(ant->getEnemyPosition_x() - camera.x, ant->getEnemyPosition_y() - camera.y, 48, 32, renderer);
+		}
+		if (ant->getID() == 2)
+		{
+			ant->AnimDraw(ant->getEnemyPosition_x() - camera.x, ant->getEnemyPosition_y() - camera.y, 45, 25, renderer);
+		}
+		if (ant->getID() == 3)
+		{
+			ant->AnimDraw(ant->getEnemyPosition_x() - camera.x, ant->getEnemyPosition_y() - camera.y, 48, 32, renderer);
+		}
+		if (ant->getID() == 4)
+		{
+			ant->AnimDraw(ant->getEnemyPosition_x() - camera.x, ant->getEnemyPosition_y() - camera.y, 48, 32, renderer);
+		}
+		if (ant->getID() == 5)
+		{
+			ant->AnimDraw(ant->getEnemyPosition_x() - camera.x, ant->getEnemyPosition_y() - camera.y, 45, 25, renderer);
+		}
+		if (ant->getID() == 6)
+		{
+			ant->AnimDraw(ant->getEnemyPosition_x() - camera.x, ant->getEnemyPosition_y() - camera.y, 53, 30, renderer);
+		}
+		ant->update(2);
+
 		ui->Draw(ui->getPosition_x(), ui->getPosition_y(), renderer);
-<<<<<<< HEAD
+
 		if (ui_text->getID() == 1)
 		{
 			ui_text->AnimDraw(ui->getPosition_x() + 32, ui->getPosition_y() + 20, 2, 1, renderer);
@@ -977,8 +1132,7 @@ int main(int argc, char *argv[])
 		{
 			ui_smg->Draw(ui->getPosition_x() + 349, ui->getPosition_y() + 27, renderer);
 		}
-=======
->>>>>>> 9a9a33f888b8b6d103ce3d7540fc62833440b9b5
+
 		if (ingame_cursor->getID() == 2)
 		{
 			ingame_cursor->AnimDraw(ingame_cursor->getPosition_x(), ingame_cursor->getPosition_y(), 3, 1, renderer);
