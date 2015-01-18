@@ -51,6 +51,8 @@ public:
 	bool getMoved();
 	bool hasMoved();
 
+	bool finished;
+
 	bool first = true;
 
 	void setFrametime(int frametime);

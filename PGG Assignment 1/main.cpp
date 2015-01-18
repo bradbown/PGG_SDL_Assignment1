@@ -698,7 +698,7 @@ int main(int argc, char *argv[])
 
 		if (cmd_mouseleft && !over_box)
 		{
-			Player->SetDestination(camera.x + mouse_x, camera.y + mouse_y);
+			Player->SetDestination(camera.x + mouse_x, camera.y + mouse_y - 60);
 			cmd_mouseleft = false;
 			walking = true;
 			Player->first = true;
@@ -706,7 +706,7 @@ int main(int argc, char *argv[])
 
 		if (cmd_mouseleft && over_box)
 		{
-			Player->SetDestination(camera.x + mouse_x, camera.y + mouse_y);
+			Player->SetDestination(camera.x + mouse_x - 30, camera.y + mouse_y - 40);
 			cmd_mouseleft = false;
 			walking = true;
 			Player->first = true;
@@ -715,9 +715,8 @@ int main(int argc, char *argv[])
 
 		ingame_cursor->AnimDraw(ingame_cursor->getPosition_x(), ingame_cursor->getPosition_y(), 2, 1, renderer);
 		
-		if (moveto_box)
+		if (moveto_box && !Player->finished)
 		{
-			transition = true;
 			Player->MoveToDest();
 			if (Player->getPlayerPosition_x() == Player->GetDestX() && Player->getPlayerPosition_y() == Player->GetDestY())
 			{
@@ -730,7 +729,14 @@ int main(int argc, char *argv[])
 				Player->setID(13);
 				Player->update_idle(2);
 				Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 28, 64, renderer);
-				//moveto_box = false;
+				if (Player->finished)
+				{
+					Player->finished = false;
+					interact = false;
+					Player->setID(3);
+					moveto_box = false;
+					Player->update_idle(2);
+				}
 			}
 		}
 		else
@@ -746,7 +752,7 @@ int main(int argc, char *argv[])
 			walking_N = false;
 		}
 
-		if ( walking_S && Player->getPlayerPosition_y() == Player->GetDestY())	//transition from South
+		if (walking_S && Player->getPlayerPosition_y() == Player->GetDestY())	//transition from South
 		{
 			transition = true;
 			walking_S = false;
