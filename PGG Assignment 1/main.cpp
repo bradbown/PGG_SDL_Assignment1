@@ -78,7 +78,6 @@ int main(int argc, char *argv[])
 
 	menu *menu_cursor = new menu();
 	menu *ingame_cursor = new menu();
-	menu *interact_cursor = new menu();
 
 	mainmenu->LoadFromPNG("../Assets/mainmenu_bg.png", renderer);
 	mainmenu->setPosition_x(0);
@@ -104,12 +103,8 @@ int main(int argc, char *argv[])
 	ingame_cursor->LoadFromPNG("../Assets/cursor_sheet.png", renderer);
 	ingame_cursor->setPosition_x(Input->mouse_x);
 	ingame_cursor->setPosition_y(Input->mouse_y);
-
-	interact_cursor->LoadFromPNG("../Assets/cursor_interact.png", renderer);
-	interact_cursor->setPosition_x(Input->mouse_x);
-	interact_cursor->setPosition_y(Input->mouse_y);
-
-	bool menu = true;
+	
+	bool menu_active = true;
 	bool first_run = false;
 	bool go = false;
 
@@ -117,7 +112,7 @@ int main(int argc, char *argv[])
 	bool help_pressed = false;
 	bool quit_pressed = false;
 
-	while (menu)
+	while (menu_active)
 	{
 		if (Input->first)
 		{
@@ -131,7 +126,7 @@ int main(int argc, char *argv[])
 
 		if (Input->cmd_escape)
 		{
-			menu = false;
+			menu_active = false;
 		}
 
 		mainmenu->Draw(mainmenu->getPosition_x(), mainmenu->getPosition_y(), renderer);
@@ -189,12 +184,12 @@ int main(int argc, char *argv[])
 
 		if (Input->cmd_mouseleft_up && play_pressed)
 		{
-			menu = false;
+			menu_active = false;
 		}
 
 		if (Input->cmd_mouseleft_up && quit_pressed)
 		{
-			menu = false;
+			menu_active = false;
 			first_run = true;
 			go = false;
 
@@ -211,6 +206,11 @@ int main(int argc, char *argv[])
 		SDL_RenderPresent(renderer);
 	}
 
+	menu *ui = new menu();
+	ui->LoadFromPNG("../Assets/ui.png", renderer);
+	ui->setPosition_x(0);
+	ui->setPosition_y(540);
+
 	map *earth[1000];
 	for (int i = 0; i < 1000; i++)
 	{
@@ -219,14 +219,6 @@ int main(int argc, char *argv[])
 		earth[i]->setMapPosition_x(73);
 		earth[i]->setMapPosition_y(18.5);
 	}
-	/*
-	map *boxes[25];
-	for (int i = 0; i < 25; i++)
-	{
-		boxes[i] = new map;
-		boxes[i]->LoadFromPNG("../Assets/boxes.png", renderer);
-	}
-	*/
 
 	map *boxes = new map;
 	boxes->LoadFromPNG("../Assets/boxes.png", renderer);
@@ -366,8 +358,6 @@ int main(int argc, char *argv[])
 	{
 		Input->InputUpdate();
 
-		interact_cursor->setPosition_x(Input->mouse_x);
-		interact_cursor->setPosition_y(Input->mouse_y);
 		ingame_cursor->setPosition_x(Input->mouse_x);
 		ingame_cursor->setPosition_y(Input->mouse_y);
 
@@ -399,7 +389,7 @@ int main(int argc, char *argv[])
 			camera.x = 49;
 		}
 		if (camera.y < 18)
-		{ 
+		{
 			camera.y = 17;
 		}
 		if (camera.x > 1785 - camera.w)
@@ -432,7 +422,7 @@ int main(int argc, char *argv[])
 					cmd_mouseleft = false;
 				}
 			}
-			
+
 		}
 
 		if (Input->cmd_escape)
@@ -464,12 +454,17 @@ int main(int argc, char *argv[])
 				over_box = true;
 				std::cout << "Over Box\n";
 			}
+			else if (mouse_y >= ui->getPosition_y())
+			{
+				ingame_cursor->setID(2);
+				ingame_cursor->update_cursor(1);
+			}
 			else
 			{
 				ingame_cursor->setID(0);
 				ingame_cursor->update_cursor(1);
 				over_box = false;
-			//	ingame_cursor->Draw(ingame_cursor->getPosition_x(), ingame_cursor->getPosition_y(), renderer);
+				//	ingame_cursor->Draw(ingame_cursor->getPosition_x(), ingame_cursor->getPosition_y(), renderer);
 			}
 
 			if (mouse_x <= 720 && mouse_x >= 670)	//Move screen to the right
@@ -663,9 +658,9 @@ int main(int argc, char *argv[])
 					}
 				}
 				//Player->setPlayerPosition_y(-3);
-				
+
 				boxes->Draw(boxes->getMapPosition_x() - camera.x, boxes->getMapPosition_y() - camera.y, renderer);
-			
+
 			}
 			else
 			{
@@ -696,7 +691,7 @@ int main(int argc, char *argv[])
 		}
 		int frametime = 0;
 
-		if (cmd_mouseleft && !over_box)
+		if (cmd_mouseleft && !over_box && mouse_y <= ui->getPosition_y())
 		{
 			Player->SetDestination(camera.x + mouse_x, camera.y + mouse_y - 60);
 			cmd_mouseleft = false;
@@ -704,7 +699,7 @@ int main(int argc, char *argv[])
 			Player->first = true;
 		}
 
-		if (cmd_mouseleft && over_box)
+		if (cmd_mouseleft && over_box && mouse_y <= ui->getPosition_y())
 		{
 			Player->SetDestination(camera.x + mouse_x - 30, camera.y + mouse_y - 40);
 			cmd_mouseleft = false;
@@ -713,8 +708,11 @@ int main(int argc, char *argv[])
 			moveto_box = true;
 		}
 
-		ingame_cursor->AnimDraw(ingame_cursor->getPosition_x(), ingame_cursor->getPosition_y(), 2, 1, renderer);
-		
+		if (ingame_cursor->getID() == 0 || ingame_cursor->getID() == 1)
+		{
+			ingame_cursor->AnimDraw(ingame_cursor->getPosition_x(), ingame_cursor->getPosition_y(), 3, 1, renderer);
+		}
+
 		if (moveto_box && !Player->finished)
 		{
 			Player->MoveToDest();
@@ -951,7 +949,11 @@ int main(int argc, char *argv[])
 			Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 36, 69, renderer);
 			Player->update_idle(2);
 		}
-
+		ui->Draw(ui->getPosition_x(), ui->getPosition_y(), renderer);
+		if (ingame_cursor->getID() == 2)
+		{
+			ingame_cursor->AnimDraw(ingame_cursor->getPosition_x(), ingame_cursor->getPosition_y(), 3, 1, renderer);
+		}
 		SDL_RenderPresent(renderer);
 	}
 
@@ -969,7 +971,6 @@ int main(int argc, char *argv[])
 
 	delete menu_cursor;
 	delete ingame_cursor;
-	delete interact_cursor;
 
 	SDL_DestroyWindow(window); // Destroy the window
 	SDL_Quit(); // Terminate SDL

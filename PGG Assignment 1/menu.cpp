@@ -130,7 +130,18 @@ void menu::update_cursor(int in_speed)
 
 	case 1:
 	{
-			  ReadSprite.srcrect.y = 20;
+			  ReadSprite.srcrect.y = 28;
+			  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+			  if (ReadSprite.srcrect.x >= ReadSprite.textureWidth)
+			  {
+				  ReadSprite.srcrect.x = 0;
+			  }
+	}
+		break;
+
+	case 2:
+	{
+			  ReadSprite.srcrect.y = 56;
 			  ReadSprite.srcrect.x += ReadSprite.spriteWidth;
 			  if (ReadSprite.srcrect.x >= ReadSprite.textureWidth)
 			  {
