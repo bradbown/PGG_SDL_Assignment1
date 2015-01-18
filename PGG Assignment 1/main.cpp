@@ -211,12 +211,15 @@ int main(int argc, char *argv[])
 	ui->setPosition_x(0);
 	ui->setPosition_y(540);
 
+<<<<<<< HEAD
 	menu *ui_text = new menu();
 	ui_text->LoadFromPNG("../Assets/text_sheet.png", renderer);
 
 	menu *ui_smg = new menu();
 	ui_smg->LoadFromPNG("../Assets/ui_smg.png", renderer);
 
+=======
+>>>>>>> 9a9a33f888b8b6d103ce3d7540fc62833440b9b5
 	map *earth[1000];
 	for (int i = 0; i < 1000; i++)
 	{
@@ -965,6 +968,7 @@ int main(int argc, char *argv[])
 			Player->update_idle(2);
 		}
 		ui->Draw(ui->getPosition_x(), ui->getPosition_y(), renderer);
+<<<<<<< HEAD
 		if (ui_text->getID() == 1)
 		{
 			ui_text->AnimDraw(ui->getPosition_x() + 32, ui->getPosition_y() + 20, 2, 1, renderer);
@@ -973,6 +977,8 @@ int main(int argc, char *argv[])
 		{
 			ui_smg->Draw(ui->getPosition_x() + 349, ui->getPosition_y() + 27, renderer);
 		}
+=======
+>>>>>>> 9a9a33f888b8b6d103ce3d7540fc62833440b9b5
 		if (ingame_cursor->getID() == 2)
 		{
 			ingame_cursor->AnimDraw(ingame_cursor->getPosition_x(), ingame_cursor->getPosition_y(), 3, 1, renderer);
