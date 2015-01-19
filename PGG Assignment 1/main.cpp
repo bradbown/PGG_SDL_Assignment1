@@ -237,9 +237,9 @@ int main(int argc, char *argv[])
 	Player->SetDestination(100, 100);
 	Player->setID(1);
 
-	enemy *ant = new enemy;
+	enemy *ant = new enemy();
 	ant->LoadFromPNG("../Assets/enemy_ant.png", renderer);
-	ant->setEnemyPosition_x(200);
+	ant->setEnemyPosition_x(1000);
 	ant->setEnemyPosition_y(200);
 	ant->setID(1);
 
@@ -287,9 +287,12 @@ int main(int argc, char *argv[])
 
 	bool interact = false;
 	bool over_box = false;
+	bool over_ant = false;
 	bool moveto_box = false;
 	bool first_search = true;
 	bool smg_equip = false;
+	bool ant_attack = false;
+	bool shooting = false;
 
 	while (!first_run)
 	{
@@ -472,6 +475,16 @@ int main(int argc, char *argv[])
 		if (SDL_MOUSEMOTION)
 		{
 			SDL_GetMouseState(&mouse_x, &mouse_y);
+
+			if (mouse_x >= ant->getEnemyPosition_x() - camera.x && mouse_x <= ant->getEnemyPosition_x() + 50 - camera.x && mouse_y >= ant->getEnemyPosition_y() - camera.y && mouse_y <= ant->getEnemyPosition_y() + 30 - camera.y)
+			{
+				over_ant = true;
+				std::cout << "Over ant\n";
+			}
+			else
+			{
+				over_ant = false;
+			}
 
 			//&& Input->mouse_x >= 424 && Input->mouse_x <= 754 && Input->mouse_y >= 238 && Input->mouse_y <= 288)
 			if (mouse_x >= boxes->getMapPosition_x() - camera.x && mouse_x <= boxes->getMapPosition_x() + 36 - camera.x && mouse_y >= boxes->getMapPosition_y() - camera.y && mouse_y <= boxes->getMapPosition_y() + 21 - camera.y)
@@ -719,7 +732,7 @@ int main(int argc, char *argv[])
 		}
 		int frametime = 0;
 
-		if (cmd_mouseleft && !over_box && mouse_y <= ui->getPosition_y())
+		if (!over_ant && cmd_mouseleft && !over_box && mouse_y <= ui->getPosition_y())
 		{
 			Player->SetDestination(camera.x + mouse_x, camera.y + mouse_y - 60);
 			cmd_mouseleft = false;
@@ -775,6 +788,27 @@ int main(int argc, char *argv[])
 		else
 		{
 			Player->MoveToDest();
+		}
+
+		if (over_ant && cmd_mouseleft)
+		{
+			Player->first = true;
+			Player->finished = false;
+			Player->setID(20);
+			Player->update_idle(2);
+			Player->setFrametime(20);
+			cmd_mouseleft = false;
+		}
+		if (Player->getID() == 20)
+		{
+			Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 54, 70, renderer);
+			if (Player->finished)
+			{
+				ant->setEnemyPosition_x(rand() % 1000);
+				ant->setEnemyPosition_y(rand() % 700);
+				shooting = false;
+				Player->setID(1);
+			}
 		}
 
 		//Transitioning~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -838,9 +872,8 @@ int main(int argc, char *argv[])
 				Player->first = true;
 				transition = false;
 			}
-
-			Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 29, 67, renderer);
 			Player->setID(7);
+			Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 29, 67, renderer);
 			Player->update_idle(2);
 			walking_N = true;
 		}
@@ -1121,6 +1154,36 @@ int main(int argc, char *argv[])
 			ant->AnimDraw(ant->getEnemyPosition_x() - camera.x, ant->getEnemyPosition_y() - camera.y, 53, 30, renderer);
 		}
 		ant->update(2);
+
+		if (!ant_attack && ant->getEnemyPosition_x() >= Player->getPlayerPosition_x() - 55 && ant->getEnemyPosition_x() <= Player->getPlayerPosition_x() + 35 && ant->getEnemyPosition_y() >= Player->getPlayerPosition_y() && ant->getEnemyPosition_y() <= Player->getPlayerPosition_y() + 70)
+		{
+			ant_attack = true;
+			Player->first = true;
+			ant->first = true;
+			Player->finished = false;
+			Player->setFrametime(20);
+		}
+		if (ant_attack)
+		{
+			//player loses hp
+			if (Player->getID() == 1 || Player->getID() == 7)
+			{
+				Player->setID(14);
+			}
+			if (Player->getID() == 14)
+			{
+				Player->AnimDraw(Player->getPlayerPosition_x() - camera.x, Player->getPlayerPosition_y() - camera.y, 31, 65, renderer);
+				Player->update_idle(2);
+				if (Player->finished)
+				{
+					std::cout << "-10 hp";
+					Player->setID(1);
+					ant_attack = false;
+					ant->first = true;
+					Player->first = true;
+				}
+			}
+		}
 
 		ui->Draw(ui->getPosition_x(), ui->getPosition_y(), renderer);
 

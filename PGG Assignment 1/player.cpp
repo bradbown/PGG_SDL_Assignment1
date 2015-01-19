@@ -307,6 +307,134 @@ void player::update_idle(int in_speed)
 		}
 			break;
 
+		//HIT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+		case 14:
+		{
+				   if (first)
+				   {
+					   ReadSprite.srcrect.x = 2112;
+					   first = false;
+				   }
+				   ReadSprite.srcrect.y = 1;
+				   ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+				   if (ReadSprite.srcrect.x >= (2112 + (ReadSprite.spriteWidth * 6)))
+				   {
+					   ReadSprite.srcrect.x = 2112;
+					   first = true;
+					   finished = true;
+				   }
+		}
+			break;
+
+		case 15:
+		{
+				   if (first)
+				   {
+					   ReadSprite.srcrect.x = 1071;
+					   first = false;
+				   }
+				   ReadSprite.srcrect.y = 134;
+				   ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+				   if (ReadSprite.srcrect.x >= (1071 + (ReadSprite.spriteWidth * 9)))
+				   {
+					   ReadSprite.srcrect.x = 1071;
+					   first = true;
+					   finished = true;
+				   }
+		}
+			break;
+
+		case 16:
+		{
+				   if (first)
+				   {
+					   ReadSprite.srcrect.x = 1071;
+					   first = false;
+				   }
+				   ReadSprite.srcrect.y = 134;
+				   ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+				   if (ReadSprite.srcrect.x >= (1071 + (ReadSprite.spriteWidth * 9)))
+				   {
+					   ReadSprite.srcrect.x = 1071;
+					   first = true;
+					   finished = true;
+				   }
+		}
+			break;
+
+		case 17:
+		{
+				   if (first)
+				   {
+					   ReadSprite.srcrect.x = 1071;
+					   first = false;
+				   }
+				   ReadSprite.srcrect.y = 134;
+				   ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+				   if (ReadSprite.srcrect.x >= (1071 + (ReadSprite.spriteWidth * 9)))
+				   {
+					   ReadSprite.srcrect.x = 1071;
+					   first = true;
+					   finished = true;
+				   }
+		}
+			break;
+
+		case 18:
+		{
+				   if (first)
+				   {
+					   ReadSprite.srcrect.x = 1071;
+					   first = false;
+				   }
+				   ReadSprite.srcrect.y = 134;
+				   ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+				   if (ReadSprite.srcrect.x >= (1071 + (ReadSprite.spriteWidth * 9)))
+				   {
+					   ReadSprite.srcrect.x = 1071;
+					   first = true;
+					   finished = true;
+				   }
+		}
+			break;
+
+		case 19:
+		{
+				   if (first)
+				   {
+					   ReadSprite.srcrect.x = 1071;
+					   first = false;
+				   }
+				   ReadSprite.srcrect.y = 134;
+				   ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+				   if (ReadSprite.srcrect.x >= (1071 + (ReadSprite.spriteWidth * 9)))
+				   {
+					   ReadSprite.srcrect.x = 1071;
+					   first = true;
+					   finished = true;
+				   }
+		}
+			break;
+
+		case 20:
+		{
+				   if (first)
+				   {
+					   ReadSprite.srcrect.x = 11;
+					   first = false;
+				   }
+				   ReadSprite.srcrect.y = 951;
+				   ReadSprite.srcrect.x += ReadSprite.spriteWidth;
+				   if (ReadSprite.srcrect.x >= (11 + (ReadSprite.spriteWidth * 8)))
+				   {
+					   ReadSprite.srcrect.x = 11;
+					   first = true;
+					   finished = true;
+				   }
+		}
+			break;
+
 		} // end of switch
 	} // end of FPS
 }
